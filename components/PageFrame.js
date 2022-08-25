@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   HomeIcon,
@@ -9,10 +9,17 @@ import {
   ActorIcon,
   MovieIcon,
   SettingIcon,
+  PersonIcon,
 } from "../icons/all";
 import classNames from "../helpers/classNames";
 import Footer from "./Footer";
 import Metatag from "./Metatag";
+
+import localforage from "localforage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import setCookie from "../helpers/setCookie";
+import { useRouter } from "next/router";
+
 const navigation = [
   { id: "home", name: "Home", href: "/", icon: HomeIcon, current: true },
   {
@@ -34,8 +41,21 @@ const secondaryNavigation = [
   { name: "Settings", href: "#", icon: SettingIcon },
 ];
 
-const PageFrame = ({ children, page }) => {
+const PageFrame = ({ children, page, tokenExpired, user }) => {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (u) => {
+      if (u) {
+        setCookie("token", u.accessToken);
+        if (tokenExpired) router.reload();
+      } else {
+        router.replace("/login");
+      }
+    });
+  }, [router]);
   return (
     <div className="min-h-full bg-slate-900">
       <Metatag />
@@ -54,7 +74,7 @@ const PageFrame = ({ children, page }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
           </Transition.Child>
 
           <div className="fixed inset-0 z-40 flex">
@@ -204,15 +224,15 @@ const PageFrame = ({ children, page }) => {
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 min-h-screen lg:pl-72 pattern">
-        <div className="relative z-10 flex flex-shrink-0 h-16 bg-black lg:border-none">
+      <div className="flex flex-col flex-1 min-h-screen lg:pl-72 pattern1">
+        <div className="relative z-10 flex flex-shrink-0 h-16 ">
           <button
             type="button"
-            className="px-4 text-yellow-500 focus:outline-none lg:hidden"
+            className="px-4 text-white focus:outline-none lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
-            <MenuIcon className="w-6 h-6" aria-hidden="true" />
+            <MenuIcon className="w-8 h-8" aria-hidden="true" />
           </button>
           {/* Search bar */}
           <div className="flex justify-end flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
@@ -221,20 +241,15 @@ const PageFrame = ({ children, page }) => {
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
                 <div>
-                  <Menu.Button className="flex items-center max-w-xs p-2 text-sm duration-500 border border-yellow-500 rounded-full group md:pr-4 focus:outline-none lg:hover:bg-yellow-500">
-                    <img
-                      className="w-8 h-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                    <span className="hidden ml-3 text-base font-medium text-yellow-500 duration-500 group-hover:text-black lg:block">
-                      <span className="sr-only">Open user menu for </span>
-                      Emilia Birch
-                    </span>
-                    {/* <ChevronDownIcon
-                  className="flex-shrink-0 hidden w-5 h-5 ml-1 text-gray-400 lg:block"
-                  aria-hidden="true"
-                /> */}
+                  <Menu.Button className="flex items-center max-w-xs overflow-hidden text-sm duration-500 border border-white rounded-full group focus:outline-none lg:hover:bg-black">
+                    <PersonIcon className="w-10 h-10 p-1 bg-white rounded-l-full" />
+
+                    <div className="relative flex justify-center h-10">
+                      <div className="z-[9] top-0 bottom-0 self-center pr-4 ml-3 text-base text-white duration-500 group-hover:text-black font-bold">
+                        {user.firstName + " " + user.lastName}
+                      </div>
+                      <div className="absolute top-0 left-0 z-0 w-0 h-full duration-500 bg-white group-hover:w-full" />
+                    </div>
                   </Menu.Button>
                 </div>
                 <Transition
@@ -275,15 +290,20 @@ const PageFrame = ({ children, page }) => {
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <div
+                          onClick={() => {
+                            console.log("Hello");
+                            const auth = getAuth();
+                            localforage.clear();
+                            auth.signOut();
+                          }}
                           className={classNames(
                             active ? "bg-gray-100" : "",
-                            "block px-4 py-2 text-sm text-gray-700"
+                            "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                           )}
                         >
                           Logout
-                        </a>
+                        </div>
                       )}
                     </Menu.Item>
                   </Menu.Items>

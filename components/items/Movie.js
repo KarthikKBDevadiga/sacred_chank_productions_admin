@@ -11,7 +11,7 @@ const Movie = ({ movie, trailer, className }) => {
         className
       )}
       onClick={() => {
-        router.push("/movies/" + movie.canonical);
+        // router.push("/movies/" + movie.canonical);
       }}
     >
       <img
