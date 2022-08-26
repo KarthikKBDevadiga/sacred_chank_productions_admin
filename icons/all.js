@@ -15,3 +15,5 @@ export { default as InstagramIcon } from "./InstagramIcon";
 export { default as PlayIcon } from "./PlayIcon";
 export { default as SettingIcon } from "./SettingIcon";
 export { default as PersonIcon } from "./PersonIcon";
+export { default as SaveIcon } from "./SaveIcon";
+export { default as DeleteIcon } from "./DeleteIcon";

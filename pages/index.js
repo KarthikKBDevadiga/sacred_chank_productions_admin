@@ -8,9 +8,6 @@ export default function Example({ data, user, tokenExpired }) {
     <>
       <PageFrame tokenExpired={tokenExpired} user={user}>
         <div className="max-w-6xl sm:px-6 lg:px-8">
-          {/* <div className="h-48 film">
-            <div className="film__frame"></div>
-          </div> */}
           <div className="relative h-64 p-4 bg-black rounded-md ">
             <div className="absolute top-0 left-0 right-0 flex justify-between p-4">
               <div className="self-center flex-shrink-0 mb-4 text-4xl text-white sm:mb-0 sm:mr-4">

@@ -2,8 +2,10 @@ import PageFrame from "../../components/PageFrame";
 import { motion } from "framer-motion";
 import Actor from "../../components/items/Actor";
 import cookies from "next-cookies";
+import { useRouter } from "next/router";
 
 export default function Actors({ data, user, tokenExpired }) {
+  const router = useRouter();
   return (
     <>
       <PageFrame page="actors" user={user} tokenExpired={tokenExpired}>
@@ -30,8 +32,11 @@ export default function Actors({ data, user, tokenExpired }) {
                   transition={{
                     ease: "easeInOut",
                     duration: 0.5,
-                    delay: 0.25 * index,
+                    delay: 0.05 * index,
                     once: true,
+                  }}
+                  onClick={() => {
+                    router.push("/actors/" + cast._id);
                   }}
                 >
                   <Actor actor={cast} />
@@ -82,6 +87,8 @@ export async function getServerSideProps(context) {
       })
         .then((res) => res.json())
         .then((json) => json);
+
+  console.log(data);
 
   return { props: { data, tokenExpired, user } };
 }
