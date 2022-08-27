@@ -17,3 +17,6 @@ export { default as SettingIcon } from "./SettingIcon";
 export { default as PersonIcon } from "./PersonIcon";
 export { default as SaveIcon } from "./SaveIcon";
 export { default as DeleteIcon } from "./DeleteIcon";
+export { default as AddIcon } from "./AddIcon";
+export { default as DoneIcon } from "./DoneIcon";
+export { default as ArrowForwardIcon } from "./ArrowForwardIcon";

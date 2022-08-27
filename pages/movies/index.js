@@ -2,6 +2,7 @@ import PageFrame from "../../components/PageFrame";
 import { motion } from "framer-motion";
 import Movie from "../../components/items/Movie";
 import cookies from "next-cookies";
+import AddIcon from "../../icons/AddIcon";
 
 export default function Movies({ data, user, tokenExpired }) {
   return (
@@ -11,13 +12,18 @@ export default function Movies({ data, user, tokenExpired }) {
           {/* <div className="h-48 film">
             <div className="film__frame"></div>
           </div> */}
-          <div className="relative h-64 p-4 bg-black rounded-md ">
-            <div className="absolute top-0 left-0 right-0 flex justify-between p-4">
-              <div className="self-center flex-shrink-0 mb-4 text-4xl text-white sm:mb-0 sm:mr-4">
+          <div className="relative h-64 overflow-hidden bg-gray-700 rounded-md">
+            <div className="flex justify-between px-4 py-3 bg-gray-800">
+              <div className="self-center flex-shrink-0 mb-4 text-2xl text-white sm:mb-0 sm:mr-4">
                 Movies
               </div>
-              <div className="self-center px-4 py-2 text-yellow-500 border border-yellow-500 rounded-full h-max">
-                Add
+              <div
+                className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
+                onClick={() => {
+                  // router.push("/actors/add");
+                }}
+              >
+                <AddIcon />
               </div>
             </div>
           </div>

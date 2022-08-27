@@ -11,14 +11,21 @@ import genericValidator from "../../helpers/genericValidator";
 import { SaveIcon, DeleteIcon, ActorIcon } from "../../icons/all";
 import s3FileUpload from "../../helpers/s3FileUpload";
 import moment from "moment";
+import CustomDialog from "../../components/dialog/CustomDialog";
+import { useRouter } from "next/router";
 
 export default function AddActor({ actor, user, tokenExpired, token }) {
+  const router = useRouter();
   const [image, setImage] = useState();
   const [imageError, setImageError] = useState();
 
   const [name, setName] = useState();
   const [nameError, setNameError] = useState();
   const [loadingDialog, setLoadingDialog] = useState(false);
+
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState();
+  const [dialogDescription, setDialogDescription] = useState();
 
   const save = () => {
     let isValid = true;
@@ -48,10 +55,10 @@ export default function AddActor({ actor, user, tokenExpired, token }) {
         .then((json) => {
           console.log(status);
           console.log(json);
-          if (status == 200) {
-            // setSuccessTitle("Successful!");
-            // setSuccessDescription("Successfully Updated An Instructor");
-            // setSuccessDialog(true);
+          if (status == 201) {
+            setShowDialog(true);
+            setDialogTitle("Successful!");
+            setDialogDescription("Actor Data Added Successfully");
           } else {
             // setErrorTitle("Failed To Signup");
             // setErrorDescription(json.message);
@@ -194,6 +201,15 @@ export default function AddActor({ actor, user, tokenExpired, token }) {
             <div className="overflow-hidden bg-gray-700 rounded-md shadow-md lg:col-start-3 lg:col-span-1 h-max"></div>
           </div>
         </div>
+        <CustomDialog
+          showDialog={showDialog}
+          setShowDialog={setShowDialog}
+          title={dialogTitle}
+          description={dialogDescription}
+          success={() => {
+            router.back();
+          }}
+        />
       </PageFrame>
     </>
   );

@@ -46,6 +46,7 @@ const secondaryNavigation = [
 const PageFrame = ({
   children,
   page,
+  title,
   dialogs,
   tokenExpired,
   user,
@@ -69,7 +70,7 @@ const PageFrame = ({
   return (
     <>
       <div className="min-h-full bg-slate-900">
-        <Metatag />
+        <Metatag title={title} />
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"

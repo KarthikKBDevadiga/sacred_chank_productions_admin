@@ -11,8 +11,12 @@ import genericValidator from "../../helpers/genericValidator";
 import { SaveIcon, DeleteIcon, ActorIcon } from "../../icons/all";
 import s3FileUpload from "../../helpers/s3FileUpload";
 import moment from "moment";
+import CustomDialog from "../../components/dialog/CustomDialog";
+import { useRouter } from "next/router";
 
 export default function UpdateActor({ actor, user, tokenExpired, token }) {
+  const router = useRouter();
+
   const [image, setImage] = useState(actor.image);
   const [imageError, setImageError] = useState();
 
@@ -20,7 +24,11 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
   const [nameError, setNameError] = useState();
   const [loadingDialog, setLoadingDialog] = useState(false);
 
-  const save = () => {
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState();
+  const [dialogDescription, setDialogDescription] = useState();
+
+  const saveActor = () => {
     let isValid = true;
     isValid = genericValidator(image, setImageError, "Actor Image") && isValid;
     isValid = genericValidator(name, setNameError, "Name") && isValid;
@@ -43,6 +51,7 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
       })
         .then((res) => {
           setLoadingDialog(false);
+
           status = res.status;
           return res.json();
         })
@@ -50,9 +59,9 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
           console.log(status);
           console.log(json);
           if (status == 200) {
-            // setSuccessTitle("Successful!");
-            // setSuccessDescription("Successfully Updated An Instructor");
-            // setSuccessDialog(true);
+            setShowDialog(true);
+            setDialogTitle("Successful!");
+            setDialogDescription("Actor Data Updated Successfully");
           } else {
             // setErrorTitle("Failed To Signup");
             // setErrorDescription(json.message);
@@ -84,6 +93,9 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
         console.log(status);
         console.log(json);
         if (status == 200) {
+          setShowDialog(true);
+          setDialogTitle("Successful!");
+          setDialogDescription("Actor Data Deleted Successfully");
           // setSuccessTitle("Successful!");
           // setSuccessDescription("Successfully Updated An Instructor");
           // setSuccessDialog(true);
@@ -227,6 +239,7 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
                   className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                   onClick={() => {
                     // save();
+                    deleteActor();
                   }}
                 >
                   <DeleteIcon />
@@ -234,7 +247,7 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
                 <div
                   className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                   onClick={() => {
-                    save();
+                    saveActor();
                   }}
                 >
                   <SaveIcon />
@@ -279,6 +292,15 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
             </motion.div>
           </div>
         </div>
+        <CustomDialog
+          showDialog={showDialog}
+          setShowDialog={setShowDialog}
+          title={dialogTitle}
+          description={dialogDescription}
+          success={() => {
+            router.back();
+          }}
+        />
       </PageFrame>
     </>
   );

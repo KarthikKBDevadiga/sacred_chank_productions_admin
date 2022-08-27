@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Actor from "../../components/items/Actor";
 import cookies from "next-cookies";
 import { useRouter } from "next/router";
+import AddIcon from "../../icons/AddIcon";
 
 export default function Actors({ data, user, tokenExpired }) {
   const router = useRouter();
@@ -10,13 +11,18 @@ export default function Actors({ data, user, tokenExpired }) {
     <>
       <PageFrame page="actors" user={user} tokenExpired={tokenExpired}>
         <div className="max-w-6xl sm:px-6 lg:px-8">
-          <div className="relative h-64 p-4 bg-black rounded-md ">
-            <div className="flex justify-between">
-              <div className="self-center flex-shrink-0 mb-4 text-4xl text-yellow-500 sm:mb-0 sm:mr-4">
+          <div className="relative h-64 overflow-hidden bg-gray-700 rounded-md">
+            <div className="flex justify-between px-4 py-3 bg-gray-800">
+              <div className="self-center flex-shrink-0 mb-4 text-2xl text-white sm:mb-0 sm:mr-4">
                 Actors
               </div>
-              <div className="self-center px-4 py-2 text-yellow-500 border border-yellow-500 rounded-full h-max">
-                Add
+              <div
+                className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
+                onClick={() => {
+                  router.push("/actors/add");
+                }}
+              >
+                <AddIcon />
               </div>
             </div>
           </div>
@@ -78,7 +84,7 @@ export async function getServerSideProps(context) {
     });
 
   const data = tokenExpired
-    ? []
+    ? { actors: [] }
     : await fetch(process.env.BASE_API_URL + "actors", {
         method: "get",
         headers: {
