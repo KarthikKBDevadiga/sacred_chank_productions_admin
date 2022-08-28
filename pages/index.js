@@ -19,7 +19,7 @@ export default function Example({ data, user, tokenExpired }) {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4 p-4 -mt-48 overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {data.movies.map((movie, index) => {
+            {data.movies?.map((movie, index) => {
               return (
                 <motion.div
                   key={index}

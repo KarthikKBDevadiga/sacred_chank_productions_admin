@@ -24,6 +24,8 @@ import TextareaAutosize from "react-textarea-autosize";
 import getYoutubeVideoId from "../../helpers/getYoutubeVideoId";
 import ActorSearchDialog from "../../components/dialog/ActorSearchDialog";
 import { setRequestMeta } from "next/dist/server/request-meta";
+import YoutubeDialog from "../../components/dialog/YoutubeDialog";
+import AddVideoDialog from "../../components/dialog/AddVideoDialog";
 
 const MOVIE_ACTIONS = {
   UPDATE_MOVIE_TITLE: "update_movie_title",
@@ -57,6 +59,11 @@ export default function UpdateActor({
   const [dialogDescription, setDialogDescription] = useState();
 
   const [searchDialog, setSearchDialog] = useState(false);
+
+  const [openVideoDialog, setOpenVideoDialog] = useState(false);
+  const [youtubeUrl, setYoutubeUrl] = useState();
+
+  const [addVideoDialog, setAddVideoDialog] = useState(true);
 
   const reducer = (movie, action) => {
     switch (action.type) {
@@ -123,10 +130,15 @@ export default function UpdateActor({
       case MOVIE_ACTIONS.REMOVE_MOVIE_CAST:
         return {
           ...movie,
-          casts: movie.casts.filter((cast) => cast.id != action.payload.castId),
+          casts: movie.casts.filter(
+            (cast) => cast._id != action.payload.castId
+          ),
         };
       case MOVIE_ACTIONS.ADD_MOVIE_CAST:
-        if (movie.casts.includes(action.payload.actor)) return movie;
+        const already = movie.casts.find(
+          (cast) => cast._id == action.payload.actor._id
+        );
+        if (already != null) return movie;
         return {
           ...movie,
           casts: [...movie.casts, action.payload.actor],
@@ -355,7 +367,6 @@ export default function UpdateActor({
                     Release Date
                   </label>
                 </div>
-                {/* <div className="w-full h-px my-4 bg-white rounded-sm" /> */}
 
                 <div className="mt-4 md:flex md:itsems-center md:justify-between">
                   <div className="flex-1 min-w-0">
@@ -414,7 +425,7 @@ export default function UpdateActor({
 
                 <div className="mt-4">
                   <div className="text-sm text-gray-500">Genres</div>
-                  <div className="flex flex-wrap gap-2 mt-2 justify-between1">
+                  <div className="flex flex-wrap gap-2 mt-2 ">
                     {genres.map((genre) => (
                       <div
                         key={genre}
@@ -443,7 +454,7 @@ export default function UpdateActor({
 
                 <div className="mt-4">
                   <div className="text-sm text-gray-500">Languages</div>
-                  <div className="flex flex-wrap gap-2 mt-2 justify-between1">
+                  <div className="flex flex-wrap gap-2 mt-2 ">
                     {languages.map((language) => (
                       <div
                         key={language}
@@ -470,8 +481,8 @@ export default function UpdateActor({
                   </div>
                 </div>
                 <div className="mt-4">
-                  <div className="text-sm text-gray-500">Cast</div>
-                  <div className="flex flex-wrap gap-2 mt-2 justify-between1">
+                  <div className="text-sm text-gray-500">Casts</div>
+                  <div className="flex flex-wrap gap-2 mt-2 ">
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-4 lg:grid-cols-4">
                       {movie.casts?.map((cast, index) => {
                         return (
@@ -503,7 +514,7 @@ export default function UpdateActor({
                                   dispatch({
                                     type: MOVIE_ACTIONS.REMOVE_MOVIE_CAST,
                                     payload: {
-                                      castId: cast.id,
+                                      castId: cast._id,
                                     },
                                   });
                                 }}
@@ -534,6 +545,162 @@ export default function UpdateActor({
                     </div>
                   </div>
                 </div>
+
+                <div className="mt-4">
+                  <div className="text-sm text-gray-500">Promotions</div>
+                  <div className="flex flex-wrap gap-2 mt-2 ">
+                    <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+                      {movie.promotions?.map((promotion, index) => {
+                        return (
+                          <motion.div
+                            key={index}
+                            className="relative overflow-hidden rounded-md shadow-md cursor-pointer group aspect-video"
+                            onClick={() => {
+                              setYoutubeUrl(promotion.url);
+                              setOpenVideoDialog(true);
+                            }}
+                            viewport={{ once: true }}
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{
+                              ease: "easeInOut",
+                              duration: 0.5,
+                              delay: 0.25 * index,
+                              once: true,
+                            }}
+                          >
+                            <img
+                              src={
+                                "https://img.youtube.com/vi/" +
+                                getYoutubeVideoId(promotion.url) +
+                                "/hqdefault.jpg"
+                              }
+                              className="object-cover w-full h-full duration-500 group-hover:blur-sm"
+                              frameBorder="0"
+                              allowFullScreen
+                            />
+                            <div className="absolute left-0 w-full duration-500 bg-black bg-opacity-50 h-1/2 -top-full group-hover:top-0 "></div>
+                            <div className="absolute left-0 w-full duration-500 bg-black bg-opacity-50 h-1/2 -bottom-full group-hover:bottom-0"></div>
+                            <div className="absolute text-white duration-500 scale-0 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:scale-100 top-1/2 left-1/2">
+                              <PlayIcon className="w-12 h-12" />
+                            </div>
+                            <div
+                              className="absolute text-base duration-500 -translate-x-full opacity-0 md:text-lg bottom-2 left-2 group-hover:translate-x-0 group-hover:opacity-100"
+                              onClick={() => {
+                                // dispatch({
+                                //   type: MOVIE_ACTIONS.REMOVE_MOVIE_CAST,
+                                //   payload: {
+                                //     castId: cast._id,
+                                //   },
+                                // });
+                              }}
+                            >
+                              <CloseIcon className="w-8 h-8 p-1 text-white duration-500 bg-gray-500 bg-opacity-25 rounded-full hover:bg-opacity-100" />
+                            </div>
+                            <div
+                              className="absolute text-base duration-500 translate-x-full opacity-0 md:text-lg bottom-2 right-2 group-hover:translate-x-0 group-hover:opacity-100"
+                              onClick={() => {
+                                // dispatch({
+                                //   type: MOVIE_ACTIONS.REMOVE_MOVIE_CAST,
+                                //   payload: {
+                                //     castId: cast._id,
+                                //   },
+                                // });
+                              }}
+                            >
+                              <CloseIcon className="w-8 h-8 p-1 text-white duration-500 bg-gray-500 bg-opacity-25 rounded-full hover:bg-opacity-100" />
+                            </div>
+                            <div className="absolute text-base text-white duration-500 -left-full top-2 group-hover:left-2">
+                              {promotion.title}
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                      <motion.div
+                        className="flex flex-col justify-center gap-2 duration-500 bg-white border border-white border-dashed rounded-md cursor-pointer aspect-video bg-opacity-10 hover:bg-opacity-25"
+                        viewport={{ once: true }}
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{
+                          ease: "easeInOut",
+                          duration: 0.5,
+                          once: true,
+                        }}
+                        onClick={() => setAddVideoDialog(true)}
+                      >
+                        <AddIcon className="self-center text-white" />
+                        <div className="self-center text-white cursor-pointer">
+                          ADD PROMOTIONS
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className="text-sm text-gray-500">Review</div>
+                  <div className="flex flex-wrap gap-2 mt-2 ">
+                    <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+                      {movie.reviews?.map((review, index) => {
+                        return (
+                          <motion.div
+                            key={index}
+                            className="relative overflow-hidden rounded-md shadow-md cursor-pointer group aspect-video"
+                            onClick={() => {
+                              setYoutubeUrl(review.url);
+                              setOpenVideoDialog(true);
+                            }}
+                            viewport={{ once: true }}
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{
+                              ease: "easeInOut",
+                              duration: 0.5,
+                              delay: 0.25 * index,
+                              once: true,
+                            }}
+                          >
+                            <img
+                              src={
+                                "https://img.youtube.com/vi/" +
+                                getYoutubeVideoId(review.url) +
+                                "/hqdefault.jpg"
+                              }
+                              className="object-cover w-full h-full duration-500 group-hover:blur-sm"
+                              frameBorder="0"
+                              allowFullScreen
+                            />
+                            <div className="absolute left-0 w-full duration-500 bg-black bg-opacity-50 h-1/2 -top-full group-hover:top-0 "></div>
+                            <div className="absolute left-0 w-full duration-500 bg-black bg-opacity-50 h-1/2 -bottom-full group-hover:bottom-0"></div>
+                            <div className="absolute text-white duration-500 scale-0 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:scale-100 top-1/2 left-1/2">
+                              <PlayIcon className="w-16 h-16" />
+                            </div>
+                            <div className="absolute text-base text-white duration-500 -left-full top-4 group-hover:left-4">
+                              {review.title}
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+
+                      <motion.div
+                        className="flex flex-col justify-center w-full h-full col-span-1 gap-2 duration-500 bg-white border border-white border-dashed rounded-md cursor-pointer aspect-video bg-opacity-10 hover:bg-opacity-25"
+                        viewport={{ once: true }}
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{
+                          ease: "easeInOut",
+                          duration: 0.5,
+                          once: true,
+                        }}
+                        onClick={() => setAddVideoDialog(true)}
+                      >
+                        <AddIcon className="self-center text-white" />
+                        <div className="self-center text-white cursor-pointer">
+                          ADD REVIEWS
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="flex justify-end gap-2 px-4 py-3 bg-gray-800">
                 <div
@@ -557,7 +724,7 @@ export default function UpdateActor({
             </motion.div>
 
             <motion.div
-              className="overflow-hidden bg-gray-700 rounded-md shadow-md  lg:col-start-3 lg:col-span-1 h-max"
+              className="overflow-hidden bg-gray-700 rounded-md shadow-md lg:col-start-3 lg:col-span-1 h-max"
               viewport={{ once: true }}
               initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -614,6 +781,15 @@ export default function UpdateActor({
               },
             });
           }}
+        />
+        <YoutubeDialog
+          url={youtubeUrl}
+          showDialog={openVideoDialog}
+          setShowDialog={setOpenVideoDialog}
+        />
+        <AddVideoDialog
+          showDialog={addVideoDialog}
+          setShowDialog={setAddVideoDialog}
         />
       </PageFrame>
     </>

@@ -258,7 +258,9 @@ const PageFrame = ({
 
                       <div className="relative flex justify-center h-10">
                         <div className="z-[9] top-0 bottom-0 self-center pr-4 ml-3 text-base text-white duration-500 group-hover:text-black font-bold">
-                          {user.firstName + " " + user.lastName}
+                          {user
+                            ? user.firstName + " " + user.lastName
+                            : "Admin"}
                         </div>
                         <div className="absolute top-0 left-0 z-0 w-0 h-full duration-500 bg-white group-hover:w-full" />
                       </div>

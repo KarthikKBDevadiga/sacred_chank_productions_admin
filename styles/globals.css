@@ -50,20 +50,20 @@ input[type="number"] {
 
 ::-webkit-scrollbar-track
 {
-	border: 2px solid white;
-	background-color: #b2bec3;
+	border: 2px solid #4b5563;
+	background-color: #4b5563;
 }
 
 ::-webkit-scrollbar
 {
 	width: 4px;
   height: 4px;
-	background-color: #14532d;
+	background-color: #111827;
 }
 
 ::-webkit-scrollbar-thumb
 {
-	background-color: #14532d;
+	background-color: #111827;
 	border-radius: 3px;
 }
 .line-2 {

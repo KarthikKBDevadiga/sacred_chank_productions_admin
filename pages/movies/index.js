@@ -20,13 +20,28 @@ export default function Movies({ data, user, tokenExpired }) {
               <div
                 className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                 onClick={() => {
-                  // router.push("/actors/add");
+                  router.push("/movies/add");
                 }}
               >
                 <AddIcon />
               </div>
             </div>
           </div>
+          {/* <div className="relative h-64 overflow-hidden bg-gray-700 rounded-md">
+            <div className="flex justify-between px-4 py-3 bg-gray-800">
+              <div className="self-center flex-shrink-0 mb-4 text-2xl text-white sm:mb-0 sm:mr-4">
+                Movies
+              </div>
+              <div
+                className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
+                onClick={() => {
+                  // router.push("/actors/add");
+                }}
+              >
+                <AddIcon />
+              </div>
+            </div>
+          </div> */}
           <div className="grid grid-cols-1 gap-4 p-4 -mt-48 overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {data.movies.map((movie, index) => {
               return (

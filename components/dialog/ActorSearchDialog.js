@@ -141,21 +141,28 @@ const ActorSearchDialog = ({
                   }}
                 />
               </div>
-              {query && (
-                <div className="flex mx-4 mb-2">
-                  <div className="text-xs text-left text-gray-400 select-none">
-                    Search results for &#8220;
-                    <span className="text-white">{query}</span>&#8221;
-                  </div>
-                  <div className="self-center flex-1 h-px ml-4 bg-gray-400 rounded-sm"></div>
+
+              <div className="flex mx-4 mb-2">
+                <div className="text-xs text-left text-gray-400 select-none">
+                  {query ? (
+                    <>
+                      Search results for &#8220;
+                      <span className="text-white">{query}</span>&#8221;
+                    </>
+                  ) : (
+                    <>All Actors</>
+                  )}
+                  {/* Search results for &#8220;
+                  <span className="text-white">{query}</span>&#8221; */}
                 </div>
-              )}
+                <div className="self-center flex-1 h-px ml-4 bg-gray-400 rounded-sm"></div>
+              </div>
 
               <div className="flex px-4 pb-4 overflow-hidden">
                 <div
                   className={classNames(
-                    "max-h-64 min-w-0 flex-auto scroll-py-4 overflow-y-auto duration-500",
-                    selected ? "sm:h-64 pr-2 w-3xl" : "w-full"
+                    "max-h-64 min-w-0 flex-auto scroll-py-4 overflow-y-auto duration-500 pr-2",
+                    selected ? "sm:h-64  w-3xl" : "w-full"
                   )}
                 >
                   <div className="text-sm text-gray-700">
