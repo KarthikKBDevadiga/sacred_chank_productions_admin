@@ -20,3 +20,5 @@ export { default as DeleteIcon } from "./DeleteIcon";
 export { default as AddIcon } from "./AddIcon";
 export { default as DoneIcon } from "./DoneIcon";
 export { default as ArrowForwardIcon } from "./ArrowForwardIcon";
+export { default as MailIcon } from "./MailIcon";
+export { default as PhoneIcon } from "./PhoneIcon";

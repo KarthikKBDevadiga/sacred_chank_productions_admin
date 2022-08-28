@@ -63,7 +63,7 @@ export default function UpdateActor({
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
   const [youtubeUrl, setYoutubeUrl] = useState();
 
-  const [addVideoDialog, setAddVideoDialog] = useState(true);
+  const [addVideoDialog, setAddVideoDialog] = useState(false);
 
   const reducer = (movie, action) => {
     switch (action.type) {
