@@ -128,7 +128,7 @@ export default function UpdateActor({ actor, user, tokenExpired, token }) {
         loadingDialog={loadingDialog}
         setLoadingDialog={setLoadingDialog}
       >
-        <div className="max-w-6xl px-4 overflow-hidden sm:px-6 lg:px-8">
+        <div className="max-w-6xl max-h-screen px-4 overflow-hidden sm:px-6 lg:px-8">
           <div className="grid max-w-3xl grid-cols-1 gap-4 mx-auto lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
             <motion.div
               className="space-y-4 overflow-hidden bg-gray-700 rounded-md shadow-md lg:col-start-1 lg:col-span-2"
