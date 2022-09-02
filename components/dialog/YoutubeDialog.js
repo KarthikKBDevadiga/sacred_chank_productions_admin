@@ -50,9 +50,11 @@ const YoutubeDialog = ({ url, showDialog, setShowDialog }) => {
                   style={{ paddingBottom: "56.25%", paddingTop: "0px" }}
                 >
                   <iframe
-                    title="vimeo-player"
+                    title="Video"
                     src={
-                      "https://www.youtube.com/embed/" + getYoutubeVideoId(url)
+                      "https://www.youtube.com/embed/" +
+                      getYoutubeVideoId(url) +
+                      "?rel=0"
                     }
                     className="absolute top-0 left-0 w-full h-full rounded-lg"
                     frameBorder="0"

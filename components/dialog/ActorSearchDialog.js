@@ -67,9 +67,9 @@ const ActorSearchDialog = ({
 
     setActors(
       data.actors.filter((actor) => {
-        console.log(active);
-        console.log(active.find((a) => a._id == actor._id) == null);
-        return active.find((a) => a.id == actor._id) == null;
+        // console.log(active);
+        // console.log(active.find((a) => a._id == actor._id) == null);
+        return active?.find((a) => a.id == actor._id) == null;
       })
     );
   };

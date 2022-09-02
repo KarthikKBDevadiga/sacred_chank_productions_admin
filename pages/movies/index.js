@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import Movie from "../../components/items/Movie";
 import cookies from "next-cookies";
 import AddIcon from "../../icons/AddIcon";
+import { useRouter } from "next/router";
 
 export default function Movies({ data, user, tokenExpired }) {
+  const router = useRouter();
   return (
     <>
       <PageFrame page="movies" user={user} tokenExpired={tokenExpired}>

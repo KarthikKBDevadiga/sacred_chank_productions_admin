@@ -237,7 +237,7 @@ const PageFrame = ({
           </div>
         </div>
 
-        <div className="flex flex-col flex-1 min-h-screen gap-4 lg:pl-72 pattern1">
+        <div className="flex flex-col flex-1 min-h-screen lg:pl-72 pattern1">
           <div className="relative z-10 flex flex-shrink-0 h-16 ">
             <button
               type="button"

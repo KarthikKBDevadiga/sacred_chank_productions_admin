@@ -29,11 +29,9 @@ import YoutubeDialog from "../../components/dialog/YoutubeDialog";
 import AddVideoDialog from "../../components/dialog/AddVideoDialog";
 import createKey from "../../helpers/createKey";
 import { ActionCodeOperation } from "firebase/auth";
-import BookTicketButton from "../../components/BookTicketButton";
-import AddBookTicketButton from "../../components/AddBookTicketButton";
-import AddTicketDialog from "../../components/dialog/AddTicketDialog";
 
 const MOVIE_ACTIONS = {
+  UPDATE_MOVIE_CANONICAL: "update_movie_canonical",
   UPDATE_MOVIE_TITLE: "update_movie_title",
   UPDATE_MOVIE_DESCRIPTION: "update_movie_description",
   UPDATE_MOVIE_RELEASE_DATE: "update_movie_release_date",
@@ -50,13 +48,11 @@ const MOVIE_ACTIONS = {
   REMOVE_MOVIE_PROMOTION: "remove_movie_promotion",
   ADD_MOVIE_REVIEW: "add_movie_review",
   REMOVE_MOVIE_REVIEW: "remove_movie_review",
-  Add_MOVIE_TICKET: "add_movie_ticket",
 };
 
 export default function UpdateActor({
   genres,
   languages,
-  savedMovie,
   user,
   tokenExpired,
   token,
@@ -76,12 +72,16 @@ export default function UpdateActor({
 
   const [addVideoDialog, setAddVideoDialog] = useState(false);
 
-  const [addTicketDialog, setAddTicketDialog] = useState(false);
-
   const [videoDialogType, setVideoDialogType] = useState();
 
   const reducer = (movie, action) => {
     switch (action.type) {
+      case MOVIE_ACTIONS.UPDATE_MOVIE_CANONICAL:
+        console.log(movie);
+        return {
+          ...movie,
+          canonical: action.payload.canonical,
+        };
       case MOVIE_ACTIONS.UPDATE_MOVIE_TITLE:
         return {
           ...movie,
@@ -195,26 +195,19 @@ export default function UpdateActor({
             (review) => review._id != action.payload.reviewId
           ),
         };
-      case MOVIE_ACTIONS.Add_MOVIE_TICKET:
-        return {
-          ...movie,
-          tickets: [
-            ...movie.tickets,
-            {
-              _id: createKey(),
-              rating: action.payload.rating,
-              timing: action.payload.timing,
-              theater: action.payload.theater,
-              url: action.payload.url,
-            },
-          ],
-        };
+
       default:
         return movie;
     }
   };
 
-  const [movie, dispatch] = useReducer(reducer, savedMovie);
+  const [movie, dispatch] = useReducer(reducer, {
+    promotions: [],
+    reviews: [],
+    genres: [],
+    languages: [],
+    casts: [],
+  });
 
   const uploadPortraitPoster = async (file) => {
     setLoadingDialog(true);
@@ -275,7 +268,7 @@ export default function UpdateActor({
           if (status == 200) {
             setShowDialog(true);
             setDialogTitle("Successful!");
-            setDialogDescription("Movie Data Updated Successfully");
+            setDialogDescription("Actor Data Updated Successfully");
           } else {
             // setErrorTitle("Failed To Signup");
             // setErrorDescription(json.message);
@@ -339,7 +332,7 @@ export default function UpdateActor({
               }}
             >
               <div className="px-4 py-3 text-lg font-bold text-white bg-gray-800">
-                Update
+                Add
               </div>
               <div className="p-4">
                 <div className="gap-4 md:flex">
@@ -348,10 +341,17 @@ export default function UpdateActor({
                     className="md:w-1/3 h-full aspect-[2/3] shadow-md rounded-md overflow-hidden relative group cursor-pointer"
                   >
                     <div className="relative w-full h-full">
-                      <img
-                        src={movie.poster?.portrait}
-                        className="object-cover w-full h-full "
-                      />
+                      {movie.poster?.portrait ? (
+                        <img
+                          src={movie.poster?.portrait}
+                          className="object-cover w-full h-full "
+                        />
+                      ) : (
+                        <div className="flex justify-center w-full h-full bg-gray-800">
+                          <AddIcon className="self-center w-16 h-16 text-white" />
+                        </div>
+                      )}
+
                       <div className="absolute top-0 flex flex-col justify-end w-full h-full overflow-hidden duration-500 rounded-md cursor-pointer group-hover:bg-black/50">
                         <div className="py-3 font-bold text-center text-white duration-500 translate-y-full bg-black group-hover:translate-y-0">
                           Upload
@@ -376,10 +376,17 @@ export default function UpdateActor({
                     className="md:flex-1 mt-4 md:mt-0 w-full h-full aspect-[3/2] shadow-md rounded-md overflow-hidden relative group"
                   >
                     <div className="relative w-full h-full group">
-                      <img
-                        src={movie.poster?.landscape}
-                        className="object-cover w-full h-full "
-                      />
+                      {movie.poster?.landscape ? (
+                        <img
+                          src={movie.poster?.landscape}
+                          className="object-cover w-full h-full "
+                        />
+                      ) : (
+                        <div className="flex justify-center w-full h-full bg-gray-800">
+                          <AddIcon className="self-center w-16 h-16 text-white" />
+                        </div>
+                      )}
+
                       <div className="absolute top-0 flex flex-col justify-end w-full h-full overflow-hidden duration-500 rounded-md cursor-pointer group-hover:bg-black/50">
                         <div className="py-3 font-bold text-center text-white duration-500 translate-y-full bg-black group-hover:translate-y-0">
                           Upload
@@ -398,6 +405,42 @@ export default function UpdateActor({
                       type="file"
                       className="sr-only"
                     />
+                  </label>
+                </div>
+
+                <div className={classNames("relative w-full  col-span-2 mt-4")}>
+                  <input
+                    // ref={emailRef}
+                    className={classNames(
+                      "w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-4 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ",
+                      "placeholder-shown:border-gray-500 focus:border-gray-100 border-gray-600"
+                    )}
+                    defaultValue={movie.canonical}
+                    name={"canonical"}
+                    id={"canonical"}
+                    type="text"
+                    placeholder="Canonical"
+                    onChange={(event) => {
+                      dispatch({
+                        type: MOVIE_ACTIONS.UPDATE_MOVIE_CANONICAL,
+                        payload: {
+                          canonical: event.target.value,
+                        },
+                      });
+                    }}
+                    // onFocus={() => setEmailError()}
+                  />
+
+                  <label
+                    htmlFor={"canonical"}
+                    className={classNames(
+                      "absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4",
+                      " peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs",
+                      "peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent",
+                      "peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500"
+                    )}
+                  >
+                    Canonical
                   </label>
                 </div>
 
@@ -557,6 +600,7 @@ export default function UpdateActor({
                           "/hqdefault.jpg"
                         }
                       />
+
                       <div className="absolute top-0 left-0 flex justify-center w-full h-full">
                         <PlayIcon className="self-center w-16 h-16 text-gray-700 " />
                       </div>
@@ -621,10 +665,11 @@ export default function UpdateActor({
                     ))}
                   </div>
                 </div>
+
                 <div className="mt-4">
                   <div className="text-sm text-gray-500">Casts</div>
                   <div className="flex flex-wrap gap-2 mt-2 ">
-                    <div className="grid grid-cols-4 gap-4 sm:grid-cols-4 lg:grid-cols-4">
+                    <div className="grid w-full grid-cols-4 gap-4 sm:grid-cols-4 lg:grid-cols-4">
                       {movie.casts?.map((cast, index) => {
                         return (
                           <motion.div
@@ -876,51 +921,8 @@ export default function UpdateActor({
                     </div>
                   </div>
                 </div>
-                <div className="mt-4">
-                  <div className="text-sm text-gray-500">Ticket</div>
-                  <div className="grid w-full grid-cols-1 mt-4 overflow-hidden text-white sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
-                    {movie.tickets?.map((ticket, index) => {
-                      return (
-                        <motion.div
-                          key={index}
-                          viewport={{ once: true }}
-                          initial={{ opacity: 0, x: 200 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{
-                            ease: "easeInOut",
-                            duration: 0.5,
-                            delay: 0.25 * index,
-                            once: true,
-                          }}
-                        >
-                          <BookTicketButton
-                            name={movie.title}
-                            rating={ticket.rating}
-                            theater={ticket.theater}
-                            timing={ticket.timing}
-                            url={ticket.url}
-                          />
-                        </motion.div>
-                      );
-                    })}
-                    <AddBookTicketButton
-                      name={movie.title}
-                      onClick={() => {
-                        setAddTicketDialog(true);
-                      }}
-                    />
-                  </div>
-                </div>
               </div>
               <div className="flex justify-end gap-2 px-4 py-3 bg-gray-800">
-                <div
-                  className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
-                  onClick={() => {
-                    deleteMovie();
-                  }}
-                >
-                  <DeleteIcon />
-                </div>
                 <div
                   className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                   onClick={() => {
@@ -928,42 +930,6 @@ export default function UpdateActor({
                   }}
                 >
                   <SaveIcon />
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="overflow-hidden bg-gray-700 rounded-md shadow-md lg:col-start-3 lg:col-span-1 h-max"
-              viewport={{ once: true }}
-              initial={{ opacity: 0, x: 100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                ease: "easeInOut",
-                duration: 0.5,
-                once: true,
-              }}
-            >
-              <div className="px-4 py-3 text-lg font-bold text-white bg-gray-800">
-                Details
-              </div>
-              <div className="px-4 pt-4 pb-2">
-                <div className="self-center text-xs font-normal text-gray-500 text-medium">
-                  Created On
-                </div>
-                <div className="self-center text-base font-normal text-white text-medium">
-                  {moment(movie.createdAt)
-                    .utcOffset("+05:30")
-                    .format("hh:mm a, DD MMMM, YYYY")}
-                </div>
-              </div>
-              <div className="px-4 pt-2 pb-4">
-                <div className="self-center text-xs font-normal text-gray-500 text-medium">
-                  Updated On
-                </div>
-                <div className="self-center text-base font-normal text-white text-medium">
-                  {moment(movie.updatedAt)
-                    .utcOffset("+05:30")
-                    .format("hh:mm a, DD MMMM, YYYY")}
                 </div>
               </div>
             </motion.div>
@@ -1010,21 +976,6 @@ export default function UpdateActor({
               payload: {
                 title: name,
                 url: videoUrl,
-              },
-            });
-          }}
-        />
-        <AddTicketDialog
-          showDialog={addTicketDialog}
-          setShowDialog={setAddTicketDialog}
-          onData={(rating, timing, theater, url) => {
-            dispatch({
-              type: MOVIE_ACTIONS.Add_MOVIE_TICKET,
-              payload: {
-                rating,
-                timing,
-                theater,
-                url,
               },
             });
           }}
@@ -1082,29 +1033,7 @@ export async function getServerSideProps(context) {
         .then((res) => res.json())
         .then((json) => json);
 
-  const savedMovie = tokenExpired
-    ? {}
-    : await fetch(
-        process.env.BASE_API_URL + "movies/canonical/" + context.params.id,
-        {
-          method: "get",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((json) => json.movie);
-
-  console.log(savedMovie);
-  savedMovie.promotions.map((promotion) => {
-    promotion._id = createKey();
-  });
-  savedMovie.reviews.map((review) => {
-    review._id = createKey();
-  });
-
   return {
-    props: { genres, languages, savedMovie, token, tokenExpired, user },
+    props: { genres, languages, token, tokenExpired, user },
   };
 }

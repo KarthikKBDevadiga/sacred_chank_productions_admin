@@ -126,7 +126,7 @@ export default function ProfileScreen({ user, tokenExpired, token }) {
   return (
     <>
       <PageFrame
-        page="actors"
+        page="profile"
         title="Profile Page"
         user={user}
         tokenExpired={tokenExpired}
@@ -316,15 +316,6 @@ export default function ProfileScreen({ user, tokenExpired, token }) {
                 </div>
               </div>
               <div className="flex justify-end gap-2 px-4 py-3 bg-gray-800">
-                <div
-                  className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
-                  onClick={() => {
-                    // save();
-                    // deleteActor();
-                  }}
-                >
-                  <DeleteIcon />
-                </div>
                 <div
                   className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                   onClick={() => {

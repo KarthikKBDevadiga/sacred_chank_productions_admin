@@ -4,8 +4,11 @@ import Actor from "../../components/items/Actor";
 import cookies from "next-cookies";
 import { useRouter } from "next/router";
 import AddIcon from "../../icons/AddIcon";
+import Pagination from "../../components/Pagination";
 
-export default function Actors({ data, user, tokenExpired }) {
+const size = 20;
+
+export default function Actors({ data, user, tokenExpired, currentPage }) {
   const router = useRouter();
   return (
     <>
@@ -50,6 +53,12 @@ export default function Actors({ data, user, tokenExpired }) {
               );
             })}
           </div>
+
+          <Pagination
+            page="actors"
+            currentPage={currentPage}
+            totalPages={Math.ceil(data.page.totalElements / size)}
+          />
         </div>
       </PageFrame>
     </>
@@ -58,6 +67,7 @@ export default function Actors({ data, user, tokenExpired }) {
 
 export async function getServerSideProps(context) {
   const { token } = cookies(context);
+  const { page = 1 } = context.query;
 
   if (token == null || token == "") {
     return {
@@ -96,5 +106,5 @@ export async function getServerSideProps(context) {
 
   console.log(data);
 
-  return { props: { data, tokenExpired, user } };
+  return { props: { data, tokenExpired, user, currentPage: page } };
 }

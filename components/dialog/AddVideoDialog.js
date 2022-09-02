@@ -6,11 +6,18 @@ import { AddIcon, DeleteIcon, DoneIcon, PlayIcon } from "../../icons/all";
 import classNames from "../../helpers/classNames";
 import getYoutubeVideoId from "../../helpers/getYoutubeVideoId";
 
-const AddVideoDialog = ({ showDialog, setShowDialog }) => {
+const AddVideoDialog = ({ showDialog, setShowDialog, onData }) => {
   const [name, setName] = useState();
   const [nameError, setNameError] = useState();
   const [videoUrl, setVideoUrl] = useState();
   const [videoUrlError, setVideoUrlError] = useState();
+
+  const onSubmit = () => {
+    setShowDialog(false);
+    setName();
+    setVideoUrl();
+    if (onData) setTimeout(() => onData(name, videoUrl), 300);
+  };
   return (
     <Transition.Root show={showDialog} as={Fragment}>
       <Dialog
@@ -100,7 +107,7 @@ const AddVideoDialog = ({ showDialog, setShowDialog }) => {
                         id={"video"}
                         type="url"
                         placeholder="Video"
-                        defaultValue={name}
+                        defaultValue={videoUrl}
                         onFocus={() => setVideoUrlError()}
                         onChange={(event) => setVideoUrl(event.target.value)}
                       />
@@ -146,8 +153,7 @@ const AddVideoDialog = ({ showDialog, setShowDialog }) => {
                 <div
                   className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                   onClick={() => {
-                    setShowDialog(false);
-                    if (success) setTimeout(() => success(), 300);
+                    onSubmit();
                   }}
                 >
                   <AddIcon />
