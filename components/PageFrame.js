@@ -259,7 +259,7 @@ const PageFrame = ({
 
                       <div className="relative flex justify-center h-10">
                         <div className="z-[9] top-0 bottom-0 self-center pr-4 ml-3 text-base text-white duration-500 group-hover:text-black font-bold">
-                          {user
+                          {!tokenExpired
                             ? user.firstName + " " + user.lastName
                             : "Admin"}
                         </div>

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
+import CloseIcon from "../icons/CloseIcon";
 
-const BookTicketButton = ({ name, rating, theater, timing, url }) => {
+const BookTicketButton = ({ name, rating, theater, timing, url, onRemove }) => {
   const router = useRouter();
   return (
     <>
@@ -46,8 +47,16 @@ const BookTicketButton = ({ name, rating, theater, timing, url }) => {
                   {rating}
                 </div>
               </div>
-              <div className="self-center px-2 font-bold text-amber-900 line-2">
-                {name}
+              <div className="flex self-center w-full px-2 font-bold text-amber-900">
+                <div className="flex-1 line-2">{name}</div>
+                {onRemove && (
+                  <div
+                    className="duration-500 bg-white bg-opacity-0 rounded-full hover:bg-opacity-25"
+                    onClick={onRemove ? onRemove : () => {}}
+                  >
+                    <CloseIcon />
+                  </div>
+                )}
               </div>
             </div>
             <div className="h-px bg-amber-700" />

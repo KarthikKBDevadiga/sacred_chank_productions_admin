@@ -51,6 +51,7 @@ const MOVIE_ACTIONS = {
   ADD_MOVIE_REVIEW: "add_movie_review",
   REMOVE_MOVIE_REVIEW: "remove_movie_review",
   Add_MOVIE_TICKET: "add_movie_ticket",
+  REMOVE_MOVIE_TICKET: "remove_movie_ticket",
 };
 
 export default function UpdateActor({
@@ -107,7 +108,6 @@ export default function UpdateActor({
           ...movie,
           genres: movie.genres.filter((genre) => genre != action.payload.genre),
         };
-
       case MOVIE_ACTIONS.ADD_MOVIE_LANGUAGE:
         return {
           ...movie,
@@ -209,6 +209,14 @@ export default function UpdateActor({
             },
           ],
         };
+      case MOVIE_ACTIONS.REMOVE_MOVIE_TICKET:
+        console.log(action);
+        return {
+          ...movie,
+          tickets: movie.tickets.filter(
+            (ticket) => ticket._id != action.payload.ticketId
+          ),
+        };
       default:
         return movie;
     }
@@ -244,14 +252,12 @@ export default function UpdateActor({
 
   const saveMovie = () => {
     let isValid = true;
-    // isValid = genericValidator(image, setImageError, "Actor Image") && isValid;
-    // isValid = genericValidator(name, setNameError, "Name") && isValid;
     if (isValid) {
       setLoadingDialog(true);
       console.log(movie);
       const body = {
         ...movie,
-        castIds: movie.casts.map((cast) => cast._id),
+        casts: movie.casts.map((cast) => cast._id),
       };
       console.log(body);
       let status = 200;
@@ -265,7 +271,6 @@ export default function UpdateActor({
       })
         .then((res) => {
           setLoadingDialog(false);
-
           status = res.status;
           return res.json();
         })
@@ -277,9 +282,7 @@ export default function UpdateActor({
             setDialogTitle("Successful!");
             setDialogDescription("Movie Data Updated Successfully");
           } else {
-            // setErrorTitle("Failed To Signup");
-            // setErrorDescription(json.message);
-            // setErrorDialog(true);
+            console.log(json);
           }
         })
         .catch((err) => {
@@ -899,7 +902,28 @@ export default function UpdateActor({
                             theater={ticket.theater}
                             timing={ticket.timing}
                             url={ticket.url}
+                            onRemove={() => {
+                              dispatch({
+                                type: MOVIE_ACTIONS.REMOVE_MOVIE_TICKET,
+                                payload: {
+                                  ticketId: ticket._id,
+                                },
+                              });
+                            }}
                           />
+                          {/* <div
+                            className="absolute top-0 right-0 p-1 text-black duration-500 bg-white rounded-full opacity-0 cursor-pointer group-hover:opacity-100"
+                            onClick={() => {
+                              dispatch({
+                                type: MOVIE_ACTIONS.REMOVE_MOVIE_TICKET,
+                                payload: {
+                                  ticketId: ticket.id,
+                                },
+                              });
+                            }}
+                          >
+                            <CloseIcon />
+                          </div> */}
                         </motion.div>
                       );
                     })}
@@ -1095,14 +1119,6 @@ export async function getServerSideProps(context) {
       )
         .then((res) => res.json())
         .then((json) => json.movie);
-
-  console.log(savedMovie);
-  savedMovie.promotions.map((promotion) => {
-    promotion._id = createKey();
-  });
-  savedMovie.reviews.map((review) => {
-    review._id = createKey();
-  });
 
   return {
     props: { genres, languages, savedMovie, token, tokenExpired, user },
