@@ -41,7 +41,7 @@ const navigation = [
   },
 ];
 const secondaryNavigation = [
-  { name: "Settings", href: "#", icon: SettingIcon },
+  { id: "settings", name: "Settings", href: "/settings", icon: SettingIcon },
 ];
 
 const PageFrame = ({
@@ -51,6 +51,7 @@ const PageFrame = ({
   dialogs,
   tokenExpired,
   user,
+  socialMedia,
   loadingDialog,
   setLoadingDialog,
 }) => {
@@ -225,7 +226,12 @@ const PageFrame = ({
                     <a
                       key={item.name}
                       href={item.href}
-                      className="flex items-center px-2 py-2 text-sm font-medium leading-6 text-gray-500 duration-500 rounded-md group hover:text-yellow-500 hover:bg-gray-800"
+                      className={classNames(
+                        item.id == page
+                          ? "bg-gray-900 text-yellow-500"
+                          : "text-gray-500 hover:text-yellow-500 hover:bg-gray-800",
+                        "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md duration-500"
+                      )}
                     >
                       <item.icon className="w-6 h-6 mr-4 " aria-hidden="true" />
                       {item.name}
@@ -294,7 +300,7 @@ const PageFrame = ({
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/settings"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -341,7 +347,7 @@ const PageFrame = ({
               </div>
             )}
           </main>
-          <Footer />
+          <Footer socialMedia={socialMedia} />
         </div>
       </div>
       {loadingDialog != null && (

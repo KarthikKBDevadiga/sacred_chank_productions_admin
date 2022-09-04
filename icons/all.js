@@ -24,3 +24,4 @@ export { default as ArrowBackwardIcon } from "./ArrowBackwardIcon";
 export { default as MailIcon } from "./MailIcon";
 export { default as PhoneIcon } from "./PhoneIcon";
 export { default as EditIcon } from "./EditIcon";
+export { default as KeyIcon } from "./KeyIcon";
