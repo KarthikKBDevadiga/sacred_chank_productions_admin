@@ -2,6 +2,8 @@ import PageFrame from "../components/PageFrame";
 import { motion } from "framer-motion";
 import Movie from "../components/items/Movie";
 import cookies from "next-cookies";
+import AddIcon from "../icons/AddIcon";
+import MovieIcon from "../icons/MovieIcon";
 
 export default function Example({ data, user, tokenExpired, socialMedia }) {
   return (
@@ -13,45 +15,35 @@ export default function Example({ data, user, tokenExpired, socialMedia }) {
       >
         {!tokenExpired && (
           <div className="max-w-6xl sm:px-6 lg:px-8">
-            <div className="relative h-64 p-4 bg-black rounded-md ">
-              <div className="absolute top-0 left-0 right-0 flex justify-between p-4">
-                <div className="self-center flex-shrink-0 mb-4 text-4xl text-white sm:mb-0 sm:mr-4">
-                  Movies
+            <div className="relative h-64 overflow-hidden bg-gray-700 rounded-md">
+              <div className="flex justify-between px-4 py-3 bg-gray-800">
+                <div className="self-center flex-shrink-0 mb-4 text-2xl text-white sm:mb-0 sm:mr-4">
+                  Dashboard
                 </div>
-                <div className="self-center px-4 py-2 text-yellow-500 border border-yellow-500 rounded-full h-max">
-                  Add
-                </div>
+                {/* <div
+                  className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
+                  onClick={() => {
+                    router.push("/movies/add");
+                  }}
+                >
+                  <AddIcon />
+                </div> */}
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 p-4 -mt-48 overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {data.movies?.map((movie, index) => {
-                return (
-                  <motion.div
-                    key={index}
-                    viewport={{ once: true }}
-                    initial={{ opacity: 0, x: 200 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{
-                      ease: "easeInOut",
-                      duration: 0.5,
-                      delay: 0.25 * index,
-                      once: true,
-                    }}
-                  >
-                    <Movie
-                      key={movie}
-                      movie={movie}
-                      className="col-span-1"
-                      trailer={() => {
-                        setYoutubeUrl(
-                          "https://www.youtube.com/watch?v=fnsWt4H619o"
-                        );
-                        setOpenVideoDialog(true);
-                      }}
-                    />
-                  </motion.div>
-                );
-              })}
+            <div className="z-10 grid grid-cols-1 gap-4 p-4 -mt-48 overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              <div className="z-[1] bg-gray-500 aspect-square rounded-md shadow-md flex flex-col justify-center">
+                <div className="self-center text-black text-9xl">
+                  {data.moviesCount}
+                </div>
+                <div className="self-center text-4xl text-black">Movies</div>
+              </div>
+              <div className="z-[1] bg-gray-500 aspect-square rounded-md shadow-md flex flex-col justify-center">
+                <div className="self-center text-black text-9xl">
+                  {" "}
+                  {data.actorsCount}
+                </div>
+                <div className="self-center text-4xl text-black">Actors</div>
+              </div>
             </div>
           </div>
         )}
@@ -94,7 +86,7 @@ export async function getServerSideProps(context) {
 
   const data = tokenExpired
     ? []
-    : await fetch(process.env.BASE_API_URL + "movies", {
+    : await fetch(process.env.BASE_API_URL + "home", {
         method: "get",
         headers: {
           Authorization: "Bearer " + token,

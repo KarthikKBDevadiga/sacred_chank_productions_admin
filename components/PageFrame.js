@@ -335,7 +335,7 @@ const PageFrame = ({
               </div>
             </div>
           </div>
-          <main className="relative flex-1">
+          <main className="relative flex-1 overflow-hidden">
             {!tokenExpired ? (
               children
             ) : (

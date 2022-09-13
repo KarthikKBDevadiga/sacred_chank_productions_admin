@@ -333,7 +333,7 @@ export default function ProfileScreen({
                       data-tooltip={"Change Password"}
                       data-tooltip-location="bottom"
                       onClick={() => {
-                        // saveActor();
+                        router.push("/changePassword");
                       }}
                     >
                       <KeyIcon />

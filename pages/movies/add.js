@@ -281,7 +281,7 @@ export default function AddMovie({
       };
       console.log(body);
       let status = 200;
-      fetch(process.env.BASE_API_URL + "movies/" + movie._id, {
+      fetch(process.env.BASE_API_URL + "movies/", {
         method: "post",
         body: JSON.stringify(body),
         headers: {
@@ -1041,14 +1041,14 @@ export default function AddMovie({
                     </div>
                   </div>
                   <div className="flex justify-end gap-2 px-4 py-3 bg-gray-800">
-                    <div
+                    {/* <div
                       className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                       onClick={() => {
                         deleteMovie();
                       }}
                     >
                       <DeleteIcon />
-                    </div>
+                    </div> */}
                     <div
                       className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
                       onClick={() => {
@@ -1059,42 +1059,6 @@ export default function AddMovie({
                     </div>
                   </div>
                 </motion.div>
-
-                {/* <motion.div
-                  className="overflow-hidden bg-gray-700 rounded-md shadow-md lg:col-start-3 lg:col-span-1 h-max"
-                  viewport={{ once: true }}
-                  initial={{ opacity: 0, x: 100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{
-                    ease: "easeInOut",
-                    duration: 0.5,
-                    once: true,
-                  }}
-                >
-                  <div className="px-4 py-3 text-lg font-bold text-white bg-gray-800">
-                    Details
-                  </div>
-                  <div className="px-4 pt-4 pb-2">
-                    <div className="self-center text-xs font-normal text-gray-500 text-medium">
-                      Created On
-                    </div>
-                    <div className="self-center text-base font-normal text-white text-medium">
-                      {moment(movie.createdAt)
-                        .utcOffset("+05:30")
-                        .format("hh:mm a, DD MMMM, YYYY")}
-                    </div>
-                  </div>
-                  <div className="px-4 pt-2 pb-4">
-                    <div className="self-center text-xs font-normal text-gray-500 text-medium">
-                      Updated On
-                    </div>
-                    <div className="self-center text-base font-normal text-white text-medium">
-                      {moment(movie.updatedAt)
-                        .utcOffset("+05:30")
-                        .format("hh:mm a, DD MMMM, YYYY")}
-                    </div>
-                  </div>
-                </motion.div> */}
               </div>
             </div>
             <CustomDialog
