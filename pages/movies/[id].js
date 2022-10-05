@@ -266,6 +266,14 @@ export default function UpdateMovie({
       const body = {
         ...movie,
         casts: movie.casts.map((cast) => cast._id),
+        tickets: movie.tickets.map((ticket) => {
+          return {
+            rating: ticket.rating,
+            timing: ticket.timing,
+            theater: ticket.theater,
+            url: ticket.url,
+          };
+        }),
       };
       console.log(body);
       let status = 200;
