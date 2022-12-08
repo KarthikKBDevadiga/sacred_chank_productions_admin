@@ -25,3 +25,4 @@ export { default as MailIcon } from "./MailIcon";
 export { default as PhoneIcon } from "./PhoneIcon";
 export { default as EditIcon } from "./EditIcon";
 export { default as KeyIcon } from "./KeyIcon";
+export { default as TheaterIcon } from "./TheaterIcon";
