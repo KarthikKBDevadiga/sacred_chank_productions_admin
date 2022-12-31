@@ -11,6 +11,7 @@ import {
   SettingIcon,
   PersonIcon,
   TheaterIcon,
+  PhoneIcon,
 } from '../icons/all';
 import classNames from '../helpers/classNames';
 import Footer from './Footer';
@@ -49,6 +50,12 @@ const navigation = [
     name: 'Events',
     href: '/event',
     icon: TheaterIcon,
+  },
+  {
+    id: 'contactUs',
+    name: 'Contact Us',
+    href: '/contactUs',
+    icon: PhoneIcon,
   },
 ];
 const secondaryNavigation = [
