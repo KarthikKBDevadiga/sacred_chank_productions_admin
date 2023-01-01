@@ -74,7 +74,7 @@ export default function ContactUs({
                   </div>
                 </div>
               </div>
-              <div className='grid grid-cols-3 gap-4 p-4 -mt-48 overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3'>
+              <div className='grid grid-cols-1 gap-4 p-4 -mt-48 overflow-hidden md:grid-cols-2 lg:grid-cols-3'>
                 {data.contacts.map((contact, index) => {
                   return (
                     <div

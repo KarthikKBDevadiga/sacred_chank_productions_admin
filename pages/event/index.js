@@ -17,7 +17,7 @@ export default function Movies({
   return (
     <>
       <PageFrame
-        page='movies'
+        page='events'
         user={user}
         tokenExpired={tokenExpired}
         socialMedia={socialMedia}

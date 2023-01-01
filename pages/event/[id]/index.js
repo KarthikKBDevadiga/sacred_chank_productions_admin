@@ -88,7 +88,7 @@ export default function UpdateMovie({
     <>
       <PageFrame
         title={event.name}
-        page='movies'
+        page='events'
         user={user}
         socialMedia={socialMedia}
         tokenExpired={tokenExpired}
