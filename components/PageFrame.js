@@ -24,6 +24,7 @@ import { useRouter } from 'next/router';
 
 import LoadingDialog from '../components/dialog/LoadingDialog';
 import Link from 'next/link';
+import { getAnalytics, setUserId } from 'firebase/analytics';
 
 const navigation = [
   { id: 'home', name: 'Home', href: '/', icon: HomeIcon },
@@ -82,6 +83,8 @@ const PageFrame = ({
       if (u) {
         setCookie('token', u.accessToken);
         if (tokenExpired) router.reload();
+        // const analytics = getAnalytics();
+        // setUserId(analytics, u.id);
       } else {
         router.replace('/login');
       }
@@ -156,14 +159,16 @@ const PageFrame = ({
                   >
                     <div className='px-2 space-y-1'>
                       {navigation.map((item) => (
-                        <a
+                        <div
                           key={item.name}
-                          href={item.href}
+                          onClick={() => {
+                            router.push(item.href);
+                          }}
                           className={classNames(
                             item.id == page
                               ? 'bg-gray-900 text-yellow-500'
                               : 'text-gray-500 hover:text-yellow-500 hover:bg-gray-800',
-                            'group flex items-center px-2 py-2 text-base font-medium rounded-md duration-500'
+                            'group flex items-center px-2 py-2 text-base font-medium rounded-md duration-500 cursor-pointer'
                           )}
                           aria-current={item.id == page ? 'page' : undefined}
                         >
@@ -172,15 +177,17 @@ const PageFrame = ({
                             aria-hidden='true'
                           />
                           {item.name}
-                        </a>
+                        </div>
                       ))}
                     </div>
                     <div className='pt-6 mt-6'>
                       <div className='px-2 space-y-1'>
                         {secondaryNavigation.map((item) => (
-                          <a
+                          <div
                             key={item.name}
-                            href={item.href}
+                            onClick={() => {
+                              router.push(item.href);
+                            }}
                             className='flex items-center px-2 py-2 text-base font-medium text-gray-500 duration-500 rounded-md group hover:text-yellow-500 hover:bg-gray-800'
                           >
                             <item.icon
@@ -188,7 +195,7 @@ const PageFrame = ({
                               aria-hidden='true'
                             />
                             {item.name}
-                          </a>
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -219,14 +226,16 @@ const PageFrame = ({
             >
               <div className='px-2 space-y-1'>
                 {navigation.map((item) => (
-                  <a
+                  <div
                     key={item.name}
-                    href={item.href}
+                    onClick={() => {
+                      router.push(item.href);
+                    }}
                     className={classNames(
                       item.id == page
                         ? 'bg-gray-900 text-yellow-500'
                         : 'text-gray-500 hover:text-yellow-500 hover:bg-gray-800',
-                      'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md duration-500'
+                      'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md duration-500 cursor-pointer'
                     )}
                     aria-current={item.id == page ? 'page' : undefined}
                   >
@@ -235,25 +244,28 @@ const PageFrame = ({
                       aria-hidden='true'
                     />
                     {item.name}
-                  </a>
+                  </div>
                 ))}
               </div>
               <div className='pt-6 mt-6'>
                 <div className='px-2 space-y-1'>
                   {secondaryNavigation.map((item) => (
-                    <a
+                    <div
                       key={item.name}
-                      href={item.href}
+                      // href={item.href}
+                      onClick={() => {
+                        router.push(item.href);
+                      }}
                       className={classNames(
                         item.id == page
                           ? 'bg-gray-900 text-yellow-500'
                           : 'text-gray-500 hover:text-yellow-500 hover:bg-gray-800',
-                        'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md duration-500'
+                        'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md duration-500 cursor-pointer'
                       )}
                     >
                       <item.icon className='w-6 h-6 mr-4 ' aria-hidden='true' />
                       {item.name}
-                    </a>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -278,8 +290,8 @@ const PageFrame = ({
                 {/* Profile dropdown */}
                 <Menu as='div' className='relative ml-3'>
                   <div>
-                    <Menu.Button className='flex items-center max-w-xs overflow-hidden text-sm duration-500 border border-white rounded-full group focus:outline-none lg:hover:bg-black'>
-                      <PersonIcon className='w-10 h-10 p-1 bg-white rounded-l-full' />
+                    <Menu.Button className='flex items-center max-w-xs overflow-hidden text-sm duration-500 border border-white rounded-full hover:border-yellow-500 group focus:outline-none lg:hover:bg-black'>
+                      <PersonIcon className='w-10 h-10 p-1 duration-500 bg-white rounded-l-full group-hover:bg-yellow-500 ' />
 
                       <div className='relative flex justify-center h-10'>
                         <div className='z-[9] top-0 bottom-0 self-center pr-4 ml-3 text-base text-white duration-500 group-hover:text-black font-bold'>
@@ -287,16 +299,16 @@ const PageFrame = ({
                             ? user.firstName + ' ' + user.lastName
                             : 'Admin'}
                         </div>
-                        <div className='absolute top-0 left-0 z-0 w-0 h-full duration-500 bg-white group-hover:w-full' />
+                        <div className='absolute top-0 left-0 z-0 w-0 h-full duration-500 bg-white group-hover:w-full group-hover:bg-yellow-500' />
                       </div>
                     </Menu.Button>
                   </div>
                   <Transition
                     as={Fragment}
-                    enter='transition ease-out duration-100'
+                    enter='transition ease-out duration-250'
                     enterFrom='transform opacity-0 scale-95'
                     enterTo='transform opacity-100 scale-100'
-                    leave='transition ease-in duration-75'
+                    leave='transition ease-in duration-250'
                     leaveFrom='transform opacity-100 scale-100'
                     leaveTo='transform opacity-0 scale-95'
                   >

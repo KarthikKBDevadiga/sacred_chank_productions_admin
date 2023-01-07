@@ -1,10 +1,10 @@
-import React from "react";
-import NProgress from "nprogress";
-import Router from "next/router";
+import React from 'react';
+import NProgress from 'nprogress';
+import Router from 'next/router';
 
 class NProgressContainer extends React.Component {
   static defaultProps = {
-    color: "white",
+    color: 'white',
     showAfterMs: 0,
     spinner: true,
   };
@@ -29,16 +29,16 @@ class NProgressContainer extends React.Component {
       NProgress.configure(options);
     }
 
-    Router.events.on("routeChangeStart", this.routeChangeStart);
-    Router.events.on("routeChangeComplete", this.routeChangeEnd);
-    Router.events.on("routeChangeError", this.routeChangeEnd);
+    Router.events.on('routeChangeStart', this.routeChangeStart);
+    Router.events.on('routeChangeComplete', this.routeChangeEnd);
+    Router.events.on('routeChangeError', this.routeChangeEnd);
   }
 
   componentWillUnmount() {
     clearTimeout(this.timer);
-    Router.events.off("routeChangeStart", this.routeChangeStart);
-    Router.events.off("routeChangeComplete", this.routeChangeEnd);
-    Router.events.off("routeChangeError", this.routeChangeEnd);
+    Router.events.off('routeChangeStart', this.routeChangeStart);
+    Router.events.off('routeChangeComplete', this.routeChangeEnd);
+    Router.events.off('routeChangeError', this.routeChangeEnd);
   }
 
   render() {
@@ -78,16 +78,16 @@ class NProgressContainer extends React.Component {
         }
 
         #nprogress .spinner {
-          display: ${spinner ? "block" : "none"};
+          display: ${spinner ? 'block' : 'none'};
           position: fixed;
           z-index: 1031;
-          top: 15px;
-          right: 15px;
+          top: 16px;
+          left: 16px;
         }
 
         #nprogress .spinner-icon {
-          width: 18px;
-          height: 18px;
+          width: 16px;
+          height: 16px;
           box-sizing: border-box;
 
           border: solid 2px transparent;
