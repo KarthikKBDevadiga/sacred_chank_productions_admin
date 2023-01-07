@@ -24,7 +24,6 @@ import { useRouter } from 'next/router';
 
 import LoadingDialog from '../components/dialog/LoadingDialog';
 import Link from 'next/link';
-import { getAnalytics, setUserId } from 'firebase/analytics';
 
 const navigation = [
   { id: 'home', name: 'Home', href: '/', icon: HomeIcon },
