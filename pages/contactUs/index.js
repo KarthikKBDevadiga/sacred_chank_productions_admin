@@ -88,7 +88,7 @@ export default function ContactUs({
                       <div className='self-center '>
                         <div className='text-lg '>{contact.name}</div>
                         <div className='text-sm '>
-                          {moment(user.updatedAt)
+                          {moment(user.createdAt)
                             .utcOffset('+05:30')
                             .format('hh:mm a, DD MMMM, YYYY')}
                         </div>
