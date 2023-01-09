@@ -12,7 +12,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from 'firebase/auth';
-import { getAnalytics } from 'firebase/analytics';
 
 import Link from 'next/link';
 import Metatag from '../components/Metatag';
@@ -37,8 +36,6 @@ export default function Login({ randomPassword }) {
   const [errorDialog, setErrorDialog] = useState(false);
   const [errorTitle, setErrorTitle] = useState();
   const [errorDescription, setErrorDescription] = useState();
-
-  const analytics = getAnalytics();
 
   const reset = (event) => {
     event.target.email.value = '';
