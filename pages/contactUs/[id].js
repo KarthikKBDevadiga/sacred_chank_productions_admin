@@ -108,8 +108,7 @@ export default function ContactUs({
                     <div className='flex gap-2 mt-4 text-white'>
                       <CommentIcon className='w-5 h-5 mt-0.5 text-gray-500' />
                       <div className='flex-1 text-base'>
-                        This si the Sample EMsssage And Thyhis is the examplea
-                        sasfa af asdgf a dg adg asdgd
+                        {contactUs.message}
                       </div>
                     </div>
                   </div>

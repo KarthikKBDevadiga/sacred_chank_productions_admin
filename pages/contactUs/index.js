@@ -27,7 +27,7 @@ import { settings } from 'nprogress';
 import urlCreator from '../../helpers/urlCreator';
 import Pagination from '../../components/Pagination';
 
-const size = 20;
+const size = 2;
 
 export default function ContactUs({
   user,
@@ -67,42 +67,46 @@ export default function ContactUs({
         {!tokenExpired && (
           <>
             <div className='max-w-6xl min-h-screen px-4 sm:px-6 lg:px-8'>
-              <div className='relative h-64 overflow-hidden bg-gray-700 rounded-md'>
+              <div className='overflow-hidden bg-gray-700 rounded-md '>
                 <div className='flex justify-between px-4 py-3 bg-gray-800'>
                   <div className='self-center flex-shrink-0 mb-4 text-2xl text-white sm:mb-0 sm:mr-4'>
                     Contact Us
                   </div>
                 </div>
-              </div>
-              <div className='grid grid-cols-1 gap-4 p-4 -mt-48 overflow-hidden md:grid-cols-2 lg:grid-cols-3'>
-                {data.contacts.map((contact, index) => {
-                  return (
-                    <div
-                      onClick={() => {
-                        router.push('contactUs/' + contact._id);
-                      }}
-                      key={index}
-                      className='z-10 flex gap-2 p-2 text-gray-900 duration-500 bg-gray-500 rounded-md shadow-md cursor-pointer hover:shadow-lg'
-                    >
-                      <PersonIcon className='w-8 h-8' />
-                      <div className='self-center '>
-                        <div className='text-lg '>{contact.name}</div>
-                        <div className='text-sm '>
-                          {moment(user.createdAt)
-                            .utcOffset('+05:30')
-                            .format('hh:mm a, DD MMMM, YYYY')}
+                <div className='grid grid-cols-1 gap-4 p-4 overflow-hidden md:grid-cols-2 lg:grid-cols-3'>
+                  {data.contacts.map((contact, index) => {
+                    return (
+                      <div
+                        onClick={() => {
+                          router.push('contactUs/' + contact._id);
+                        }}
+                        key={index}
+                        className='flex gap-2 p-2 text-gray-900 duration-500 bg-gray-500 rounded-md shadow-md cursor-pointer hover:shadow-lg'
+                      >
+                        <PersonIcon className='w-8 h-8' />
+                        <div className='self-center '>
+                          <div className='text-lg '>{contact.name}</div>
+                          <div className='text-sm '>
+                            {moment(contact.createdAt)
+                              .utcOffset('+05:30')
+                              .format('hh:mm a, DD MMMM, YYYY')}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
+                <Pagination
+                  page='contactUs'
+                  currentPage={data.pagination.page + 1}
+                  totalPages={
+                    parseInt(data.pagination.count / data.pagination.size) + 1
+                  }
+                />
+                {/* <Pagination page='contactUs' currentPage={4} totalPages={10} /> */}
               </div>
-              <Pagination
-                page='actors'
-                currentPage={data.pagination.page}
-                totalPages={Math.ceil(data.pagination.count / size)}
-              />
             </div>
+
             <CustomDialog
               showDialog={showDialog}
               setShowDialog={setShowDialog}
@@ -171,12 +175,18 @@ export async function getServerSideProps(context) {
 
   const data = tokenExpired
     ? {}
-    : await fetch(urlCreator(process.env.BASE_API_URL + 'contactUs', {}), {
-        method: 'get',
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      })
+    : await fetch(
+        urlCreator(process.env.BASE_API_URL + 'contactUs', {
+          page: page - 1,
+          size: size,
+        }),
+        {
+          method: 'get',
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        }
+      )
         .then((res) => {
           tokenExpired = res.status == 401;
           return res.json();

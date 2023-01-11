@@ -22,17 +22,13 @@ const Pagination = ({
         <div
           key={i}
           onClick={() => {
-            if (i != currentPage) {
-              params.page = i;
-              const url = urlCreator(page, params);
-              router.push(url);
-            }
+            params.page = i;
+            const url = urlCreator(page, params);
+            router.push(url);
           }}
           className={classNames(
-            i == currentPage
-              ? 'text-gray-900 bg-yellow-500 select-none'
-              : 'text-white bg-gray-900 hover:bg-gray-600  cursor-pointer  hover:text-gray-900',
-            'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium  duration-500'
+            i == currentPage ? 'text-gray-900 bg-white ' : 'text-white ',
+            'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium border border-white hover:bg-white hover:text-gray-900 duration-500 cursor-pointer'
           )}
         >
           {i}
@@ -53,9 +49,9 @@ const Pagination = ({
             }}
             className={classNames(
               i == parseInt(currentPage)
-                ? 'text-gray-900 bg-yellow-500 select-none'
-                : 'text-white bg-gray-900 hover:bg-gray-600  cursor-pointer  hover:text-gray-900',
-              'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium  duration-500'
+                ? 'text-gray-900 bg-white '
+                : 'text-white ',
+              'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium border border-white hover:bg-white hover:text-gray-900 duration-500 cursor-pointer'
             )}
           >
             {i}
@@ -65,7 +61,7 @@ const Pagination = ({
       p.push(
         <div
           key={endIndex + 1}
-          className='inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white bg-gray-900 rounded-full select-none'
+          className='inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white border border-white rounded-full'
         >
           ···
         </div>
@@ -82,11 +78,10 @@ const Pagination = ({
             }}
             className={classNames(
               i == parseInt(currentPage)
-                ? 'text-gray-900 bg-yellow-500 select-none'
-                : 'text-white bg-gray-900 hover:bg-gray-600  cursor-pointer  hover:text-gray-900',
-              'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium  duration-500'
-              // (className =
-              //   'inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white duration-500 border border-white rounded-full cursor-pointer hover:bg-white hover:text-gray-900')
+                ? 'text-gray-900 bg-white '
+                : 'text-white ',
+              (className =
+                'inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white duration-500 border border-white rounded-full cursor-pointer hover:bg-white hover:text-gray-900')
             )}
           >
             {i}
@@ -135,9 +130,9 @@ const Pagination = ({
             }}
             className={classNames(
               i == parseInt(currentPage)
-                ? 'text-gray-900 bg-yellow-500 select-none'
-                : 'text-white bg-gray-900 hover:bg-gray-600  cursor-pointer  hover:text-gray-900',
-              'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium  duration-500'
+                ? 'text-gray-900 bg-white '
+                : 'text-white ',
+              'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium border border-white hover:bg-white hover:text-gray-900 duration-500 cursor-pointer'
             )}
           >
             {i}
@@ -152,7 +147,7 @@ const Pagination = ({
             const url = urlCreator(page, params);
             router.push(url);
           }}
-          className='inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white duration-500 bg-gray-900 rounded-full cursor-pointer hover:bg-gray-600 hover:text-gray-900'
+          className='inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white duration-500 border border-white rounded-full cursor-pointer hover:bg-white hover:text-gray-900'
         >
           1
         </div>
@@ -177,10 +172,8 @@ const Pagination = ({
               router.push(url);
             }}
             className={classNames(
-              i == currentPage
-                ? 'text-gray-900 bg-yellow-500 select-none'
-                : 'text-white bg-gray-900 hover:bg-gray-600  cursor-pointer  hover:text-gray-900',
-              'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium  duration-500'
+              i == currentPage ? 'text-gray-900 bg-white ' : 'text-white ',
+              'inline-flex items-center p-1 w-8 h-8 justify-center rounded-full text-sm font-medium border border-white hover:bg-white hover:text-gray-900 duration-500 cursor-pointer'
               // "inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent  duration-500 cursor-pointer"
             )}
           >
@@ -203,7 +196,7 @@ const Pagination = ({
             const url = urlCreator(page, params);
             router.push(url);
           }}
-          className='inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white duration-500 bg-gray-900 rounded-full cursor-pointer hover:bg-gray-600 hover:text-gray-900'
+          className='inline-flex items-center justify-center w-8 h-8 p-1 text-sm font-medium text-white duration-500 border border-white rounded-full cursor-pointer hover:bg-white hover:text-gray-900'
         >
           {totalPages}
         </div>
@@ -218,7 +211,7 @@ const Pagination = ({
         'flex items-center justify-between px-4 mt-0 mb-4 sm:px-0'
       )}
     >
-      <div className='flex flex-1 w-0 ml-4'>
+      <div className='flex flex-1 w-0 -mt-px'>
         {currentPage > 1 ? (
           <div
             onClick={() => {
@@ -226,14 +219,13 @@ const Pagination = ({
               const url = urlCreator(page, params);
               router.push(url);
             }}
-            className={classNames(
-              'group p-2 w-8 h-8 rounded-full  bg-gray-900 hover:bg-gray-600  duration-500 cursor-pointer'
-            )}
+            className='inline-flex items-center px-2 pt-4 text-sm font-medium text-gray-500 duration-500 border-t-2 border-transparent cursor-pointer group hover:text-green-700 hover:border-green-700'
           >
             <ArrowBackwardIcon
-              className='w-full h-full text-gray-300 duration-500 group-hover:text-gray-900'
+              className='w-5 h-5 text-gray-400 duration-500 sm:mr-3 group-hover:text-green-700 group-hover:animate-previous'
               aria-hidden='true'
             />
+            <div className='hidden sm:block'>Previous</div>
           </div>
         ) : (
           <></>
@@ -245,21 +237,20 @@ const Pagination = ({
         </div> */}
         {p}
       </div>
-      <div className='flex justify-end flex-1 w-0 ml-2 mr-4 -mt-px '>
+      <div className='flex justify-end flex-1 w-0 -mt-px'>
         {totalPages > currentPage ? (
           <div
             onClick={() => {
-              params.page = currentPage + 1;
+              params.page = nextPage;
               const url = urlCreator(page, params);
               router.push(url);
             }}
-            className={classNames(
-              'group p-2 w-8 h-8 rounded-full  bg-gray-900 hover:bg-gray-600  duration-500 cursor-pointer'
-            )}
+            className='inline-flex items-center px-2 pt-4 text-sm font-medium text-gray-500 duration-500 border-t-2 border-transparent cursor-pointer group hover:text-green-700 hover:border-green-700'
           >
+            <div className='hidden sm:block'>Next</div>
+
             <ArrowForwardIcon
-              // className='w-full h-full text-gray-300 duration-500 group-hover:text-gray-900'
-              className='w-full h-full text-gray-300 duration-500 group-hover:text-gray-900'
+              className='w-5 h-5 text-gray-400 duration-500 sm:ml-3 group-hover:text-green-700 group-hover:animate-next'
               aria-hidden='true'
             />
           </div>

@@ -286,6 +286,16 @@ const PageFrame = ({
             <div className='flex justify-end flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8'>
               {/* <div className="flex-1 "></div> */}
               <div className='flex items-center ml-4 md:ml-6'>
+                <div className='relative group'>
+                  <div className='overflow-hidden duration-300 border border-white rounded-full cursor-pointer hover:border-yellow-500'>
+                    <div className='relative flex justify-center h-10 '>
+                      <BellIcon className='z-[9] top-0 bottom-0 self-center w-10 h-10 p-2 text-base duration-500 text-white group-hover:text-black'></BellIcon>
+                      <div className='absolute top-0 left-0 z-0 w-0 h-full duration-300 bg-white group-hover:w-full group-hover:bg-yellow-500' />
+                    </div>
+                  </div>
+                  <div className='absolute bottom-0 right-0 w-3 h-3 duration-300 bg-white rounded-full'></div>
+                </div>
+
                 {/* Profile dropdown */}
                 <Menu as='div' className='relative ml-3'>
                   <div>

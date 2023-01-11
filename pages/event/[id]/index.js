@@ -147,7 +147,11 @@ export default function UpdateMovie({
                                         // console.log(seatBought);
                                         return (
                                           <div
-                                            data-tooltip={seatBought?.user.name}
+                                            data-tooltip={
+                                              seatBought?.user.name +
+                                              ' - €' +
+                                              block.price
+                                            }
                                             key={k}
                                             className={classNames(
                                               'flex items-center justify-center w-6 h-6 text-xs duration-500 border rounded-sm ',

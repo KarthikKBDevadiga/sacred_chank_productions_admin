@@ -1,10 +1,10 @@
-import PageFrame from "../components/PageFrame";
-import { motion } from "framer-motion";
-import cookies from "next-cookies";
-import Image from "next/image";
-import classNames from "../helpers/classNames";
-import { useReducer, useState } from "react";
-import genericValidator from "../helpers/genericValidator";
+import PageFrame from '../components/PageFrame';
+import { motion } from 'framer-motion';
+import cookies from 'next-cookies';
+import Image from 'next/image';
+import classNames from '../helpers/classNames';
+import { useReducer, useState } from 'react';
+import genericValidator from '../helpers/genericValidator';
 import {
   SaveIcon,
   DeleteIcon,
@@ -15,25 +15,25 @@ import {
   FacebookIcon,
   InstagramIcon,
   TwitterIcon,
-} from "../icons/all";
-import s3FileUpload from "../helpers/s3FileUpload";
-import moment from "moment";
-import CustomDialog from "../components/dialog/CustomDialog";
-import { useRouter } from "next/router";
-import Map from "../components/Map";
-import emailValidator from "../helpers/emailValidator";
-import { settings } from "nprogress";
+} from '../icons/all';
+import s3FileUpload from '../helpers/s3FileUpload';
+import moment from 'moment';
+import CustomDialog from '../components/dialog/CustomDialog';
+import { useRouter } from 'next/router';
+import Map from '../components/Map';
+import emailValidator from '../helpers/emailValidator';
+import { settings } from 'nprogress';
 
 const SETTING_ACTIONS = {
-  UPDATE_EMAIL: "update_email",
-  UPDATE_PHONE_NUMBER: "update_phone_number",
-  UPDATE_LOCATION: "update_location",
-  UPDATE_LATITUDE: "update_latitude",
-  UPDATE_LONGITUDE: "update_longitude",
-  UPDATE_FACEBOOK: "update_facebook",
-  UPDATE_INSTAGRAM: "update_instagram",
-  UPDATE_TWITTER: "update_twitter",
-  UPDATE_ERROR: "update_error",
+  UPDATE_EMAIL: 'update_email',
+  UPDATE_PHONE_NUMBER: 'update_phone_number',
+  UPDATE_LOCATION: 'update_location',
+  UPDATE_LATITUDE: 'update_latitude',
+  UPDATE_LONGITUDE: 'update_longitude',
+  UPDATE_FACEBOOK: 'update_facebook',
+  UPDATE_INSTAGRAM: 'update_instagram',
+  UPDATE_TWITTER: 'update_twitter',
+  UPDATE_ERROR: 'update_error',
 };
 
 export default function ProfileScreen({
@@ -126,12 +126,12 @@ export default function ProfileScreen({
       };
       console.log(body);
       let status = 200;
-      fetch(process.env.BASE_API_URL + "settings", {
-        method: "post",
+      fetch(process.env.BASE_API_URL + 'settings', {
+        method: 'post',
         body: JSON.stringify(body),
         headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
         },
       })
         .then((res) => {
@@ -144,8 +144,8 @@ export default function ProfileScreen({
           console.log(json);
           if (status == 200) {
             setShowDialog(true);
-            setDialogTitle("Successful!");
-            setDialogDescription("Profile Updated Successfully");
+            setDialogTitle('Successful!');
+            setDialogDescription('Profile Updated Successfully');
           } else {
             // setErrorTitle("Failed To Signup");
             // setErrorDescription(json.message);
@@ -159,29 +159,29 @@ export default function ProfileScreen({
     }
   };
   const validate = () => {
-    const emailError = emailValidator(setting.email) ? "" : "Invalid Email";
+    const emailError = emailValidator(setting.email) ? '' : 'Invalid Email';
     const phoneNumberError = genericValidator(setting.phoneNumber)
-      ? ""
-      : "Phone Number Cant Be Empty";
+      ? ''
+      : 'Phone Number Cant Be Empty';
     const location = genericValidator(setting.location)
-      ? ""
-      : "Location Cant Be Empty";
+      ? ''
+      : 'Location Cant Be Empty';
     const facebookError = genericValidator(setting.facebook)
-      ? ""
-      : "Location Cant Be Empty";
+      ? ''
+      : 'Location Cant Be Empty';
     const instagramError = genericValidator(setting.instagram)
-      ? ""
-      : "Location Cant Be Empty";
+      ? ''
+      : 'Location Cant Be Empty';
     const twitterError = genericValidator(setting.twitter)
-      ? ""
-      : "Location Cant Be Empty";
+      ? ''
+      : 'Location Cant Be Empty';
   };
 
   return (
     <>
       <PageFrame
-        page="settings"
-        title="Settings"
+        page='settings'
+        title='Settings'
         user={user}
         socialMedia={socialMedia}
         tokenExpired={tokenExpired}
@@ -190,41 +190,41 @@ export default function ProfileScreen({
       >
         {!tokenExpired && (
           <>
-            <div className="max-w-6xl min-h-screen px-4 sm:px-6 lg:px-8">
-              <div className="grid max-w-3xl grid-cols-1 gap-4 mx-auto lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+            <div className='max-w-6xl min-h-screen px-4 sm:px-6 lg:px-8'>
+              <div className='grid max-w-3xl grid-cols-1 gap-4 mx-auto lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3'>
                 <motion.div
-                  className="space-y-4 bg-gray-700 rounded-md shadow-md lg:col-start-1 lg:col-span-2"
+                  className='space-y-4 bg-gray-700 rounded-md shadow-md lg:col-start-1 lg:col-span-2'
                   viewport={{ once: true }}
                   initial={{ opacity: 0, x: -200 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{
-                    ease: "easeInOut",
+                    ease: 'easeInOut',
                     duration: 0.5,
                     once: true,
                   }}
                 >
-                  <div className="px-4 py-3 text-lg font-bold text-white bg-gray-800 rounded-t-md">
+                  <div className='px-4 py-3 text-lg font-bold text-white bg-gray-800 rounded-t-md'>
                     Settings
                   </div>
-                  <div className="">
-                    <div className="flex gap-4 px-4 text-gray-300">
+                  <div className=''>
+                    <div className='flex gap-4 px-4 text-gray-300'>
                       <div>Contact Information</div>
-                      <div className="self-center flex-1 h-0.5 bg-gray-300 rounded-full" />
+                      <div className='self-center flex-1 h-0.5 bg-gray-300 rounded-full' />
                     </div>
-                    <div className="px-4">
-                      <div className={"relative w-full mt-4"}>
+                    <div className='px-4'>
+                      <div className={'relative w-full mt-4'}>
                         <input
                           // ref={emailRef}
                           className={classNames(
-                            "w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ",
+                            'w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ',
                             setting.emailError
-                              ? "border-red-700 focus:border-red-500"
-                              : "placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600"
+                              ? 'border-red-700 focus:border-red-500'
+                              : 'placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600'
                           )}
-                          name={"email"}
-                          id={"email"}
-                          type="email"
-                          placeholder="Email"
+                          name={'email'}
+                          id={'email'}
+                          type='email'
+                          placeholder='Email'
                           defaultValue={setting.email}
                           onFocus={() => setEmailError()}
                           onChange={(event) => {
@@ -238,44 +238,44 @@ export default function ProfileScreen({
                         />
                         <MailIcon
                           className={classNames(
-                            "absolute w-5 h-5  top-2.5 left-3 duration-200",
+                            'absolute w-5 h-5  top-2.5 left-3 duration-200',
                             setting.emailError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : " text-gray-500 peer-focus:text-white "
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : ' text-gray-500 peer-focus:text-white '
                           )}
                         />
                         <label
-                          htmlFor={"email"}
+                          htmlFor={'email'}
                           className={classNames(
-                            "absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4",
-                            " peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs",
-                            "peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent",
+                            'absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4',
+                            ' peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs',
+                            'peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent',
                             setting.emailError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : "peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500"
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : 'peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500'
                           )}
                         >
                           Email
                         </label>
                         {setting.emailError && (
-                          <div className="absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500">
+                          <div className='absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500'>
                             {setting.emailError}
                           </div>
                         )}
                       </div>
-                      <div className={"relative w-full mt-4"}>
+                      <div className={'relative w-full mt-4'}>
                         <input
                           // ref={emailRef}
                           className={classNames(
-                            "w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ",
+                            'w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ',
                             setting.phoneNumberError
-                              ? "border-red-700 focus:border-red-500"
-                              : "placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600"
+                              ? 'border-red-700 focus:border-red-500'
+                              : 'placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600'
                           )}
-                          name={"phone"}
-                          id={"phone"}
-                          type="tel"
-                          placeholder="Phone Number"
+                          name={'phone'}
+                          id={'phone'}
+                          type='tel'
+                          placeholder='Phone Number'
                           defaultValue={setting.phoneNumber}
                           onFocus={() => setEmailError()}
                           onChange={(event) => {
@@ -289,39 +289,39 @@ export default function ProfileScreen({
                         />
                         <PhoneIcon
                           className={classNames(
-                            "absolute w-5 h-5  top-2.5 left-3 duration-200",
+                            'absolute w-5 h-5  top-2.5 left-3 duration-200',
                             setting.phoneNumberError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : " text-gray-500 peer-focus:text-white "
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : ' text-gray-500 peer-focus:text-white '
                           )}
                         />
                         <label
-                          htmlFor={"phone"}
+                          htmlFor={'phone'}
                           className={classNames(
-                            "absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4",
-                            " peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs",
-                            "peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent",
+                            'absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4',
+                            ' peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs',
+                            'peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent',
                             setting.phoneNumberError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : "peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500"
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : 'peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500'
                           )}
                         >
                           Phone Number
                         </label>
                         {emailError && (
-                          <div className="absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500">
+                          <div className='absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500'>
                             {emailError}
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex gap-4 px-4 mt-4 text-gray-300">
+                    <div className='flex gap-4 px-4 mt-4 text-gray-300'>
                       <div>Location</div>
-                      <div className="self-center flex-1 h-0.5 bg-gray-300 rounded-full" />
+                      <div className='self-center flex-1 h-0.5 bg-gray-300 rounded-full' />
                     </div>
                     <div></div>
-                    <div className="relative mt-4">
+                    <div className='relative mt-4'>
                       <Map
                         latitude={setting.latitude}
                         setLatitude={(value) => {
@@ -342,27 +342,27 @@ export default function ProfileScreen({
                           });
                         }}
                       />
-                      <div className="absolute top-0 right-0 flex justify-center w-full h-full pointer-events-none">
+                      <div className='absolute top-0 right-0 flex justify-center w-full h-full pointer-events-none'>
                         <img
-                          className="self-center h-20 -mt-20"
-                          src="/marker.png"
+                          className='self-center h-20 -mt-20'
+                          src='/marker.png'
                         />
                       </div>
                     </div>
-                    <div className="px-4">
-                      <div className={"relative w-full mt-4"}>
+                    <div className='px-4'>
+                      <div className={'relative w-full mt-4'}>
                         <input
                           // ref={emailRef}
                           className={classNames(
-                            "w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ",
+                            'w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ',
                             setting.locationError
-                              ? "border-red-700 focus:border-red-500"
-                              : "placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600"
+                              ? 'border-red-700 focus:border-red-500'
+                              : 'placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600'
                           )}
-                          name={"location"}
-                          id={"location"}
-                          type="name"
-                          placeholder="Location"
+                          name={'location'}
+                          id={'location'}
+                          type='name'
+                          placeholder='Location'
                           defaultValue={setting.location}
                           onFocus={() => setEmailError()}
                           onChange={(event) => {
@@ -376,50 +376,50 @@ export default function ProfileScreen({
                         />
                         <MailIcon
                           className={classNames(
-                            "absolute w-5 h-5  top-2.5 left-3 duration-200",
+                            'absolute w-5 h-5  top-2.5 left-3 duration-200',
                             setting.locationError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : " text-gray-500 peer-focus:text-white "
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : ' text-gray-500 peer-focus:text-white '
                           )}
                         />
                         <label
-                          htmlFor={"location"}
+                          htmlFor={'location'}
                           className={classNames(
-                            "absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4",
-                            " peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs",
-                            "peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent",
+                            'absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4',
+                            ' peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs',
+                            'peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent',
                             setting.locationError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : "peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500"
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : 'peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500'
                           )}
                         >
                           Location
                         </label>
                         {setting.locationError && (
-                          <div className="absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500">
+                          <div className='absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500'>
                             {setting.locationError}
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex gap-4 px-4 mt-4 text-gray-300">
+                    <div className='flex gap-4 px-4 mt-4 text-gray-300'>
                       <div>Social Media</div>
-                      <div className="self-center flex-1 h-0.5 bg-gray-300 rounded-full" />
+                      <div className='self-center flex-1 h-0.5 bg-gray-300 rounded-full' />
                     </div>
-                    <div className="px-4">
-                      <div className={"relative w-full mt-4"}>
+                    <div className='px-4'>
+                      <div className={'relative w-full mt-4'}>
                         <input
                           className={classNames(
-                            "w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ",
+                            'w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ',
                             setting.facebookError
-                              ? "border-red-700 focus:border-red-500"
-                              : "placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600"
+                              ? 'border-red-700 focus:border-red-500'
+                              : 'placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600'
                           )}
-                          name={"facebook"}
-                          id={"facebook"}
-                          type="name"
-                          placeholder="Facebook"
+                          name={'facebook'}
+                          id={'facebook'}
+                          type='name'
+                          placeholder='Facebook'
                           defaultValue={setting.facebook}
                           onFocus={() => setEmailError()}
                           onChange={(event) => {
@@ -433,44 +433,44 @@ export default function ProfileScreen({
                         />
                         <FacebookIcon
                           className={classNames(
-                            "absolute w-5 h-5  top-2.5 left-3 duration-200",
+                            'absolute w-5 h-5  top-2.5 left-3 duration-200',
                             setting.facebookError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : " text-gray-500 peer-focus:text-white "
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : ' text-gray-500 peer-focus:text-white '
                           )}
                         />
                         <label
-                          htmlFor={"facebook"}
+                          htmlFor={'facebook'}
                           className={classNames(
-                            "absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4",
-                            " peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs",
-                            "peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent",
+                            'absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4',
+                            ' peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs',
+                            'peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent',
                             setting.facebookError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : "peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500"
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : 'peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500'
                           )}
                         >
                           Facebook
                         </label>
                         {setting.facebookError && (
-                          <div className="absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500">
+                          <div className='absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500'>
                             {setting.facebookError}
                           </div>
                         )}
                       </div>
-                      <div className={"relative w-full mt-4"}>
+                      <div className={'relative w-full mt-4'}>
                         <input
                           // ref={emailRef}
                           className={classNames(
-                            "w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ",
+                            'w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ',
                             setting.instagramError
-                              ? "border-red-700 focus:border-red-500"
-                              : "placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600"
+                              ? 'border-red-700 focus:border-red-500'
+                              : 'placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600'
                           )}
-                          name={"instagram"}
-                          id={"instagram"}
-                          type="name"
-                          placeholder="Instagram"
+                          name={'instagram'}
+                          id={'instagram'}
+                          type='name'
+                          placeholder='Instagram'
                           defaultValue={setting.instagram}
                           onFocus={() => setEmailError()}
                           onChange={(event) => {
@@ -484,44 +484,44 @@ export default function ProfileScreen({
                         />
                         <InstagramIcon
                           className={classNames(
-                            "absolute w-5 h-5  top-2.5 left-3 duration-200",
+                            'absolute w-5 h-5  top-2.5 left-3 duration-200',
                             setting.instagramError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : " text-gray-500 peer-focus:text-white "
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : ' text-gray-500 peer-focus:text-white '
                           )}
                         />
                         <label
-                          htmlFor={"instagram"}
+                          htmlFor={'instagram'}
                           className={classNames(
-                            "absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4",
-                            " peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs",
-                            "peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent",
+                            'absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4',
+                            ' peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs',
+                            'peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent',
                             setting.instagramError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : "peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500"
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : 'peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500'
                           )}
                         >
                           Instagram
                         </label>
                         {setting.instagramError && (
-                          <div className="absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500">
+                          <div className='absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500'>
                             {setting.instagramError}
                           </div>
                         )}
                       </div>
-                      <div className={"relative w-full mt-4"}>
+                      <div className={'relative w-full mt-4'}>
                         <input
                           // ref={emailRef}
                           className={classNames(
-                            "w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ",
+                            'w-full py-2  text-sm text-white duration-200 bg-transparent border-2 pl-10 rounded-md outline-none focus:border-2 placeholder:text-transparent peer ',
                             setting.twitterError
-                              ? "border-red-700 focus:border-red-500"
-                              : "placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600"
+                              ? 'border-red-700 focus:border-red-500'
+                              : 'placeholder-shown:border-gray-500 focus:border-gray-100  border-gray-600'
                           )}
-                          name={"twitter"}
-                          id={"twitter"}
-                          type="name"
-                          placeholder="Twitter"
+                          name={'twitter'}
+                          id={'twitter'}
+                          type='name'
+                          placeholder='Twitter'
                           defaultValue={setting.twitter}
                           onFocus={() => setEmailError()}
                           onChange={(event) => {
@@ -535,38 +535,38 @@ export default function ProfileScreen({
                         />
                         <TwitterIcon
                           className={classNames(
-                            "absolute w-5 h-5  top-2.5 left-3 duration-200",
+                            'absolute w-5 h-5  top-2.5 left-3 duration-200',
                             setting.twitterError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : " text-gray-500 peer-focus:text-white "
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : ' text-gray-500 peer-focus:text-white '
                           )}
                         />
                         <label
-                          htmlFor={"twitter"}
+                          htmlFor={'twitter'}
                           className={classNames(
-                            "absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4",
-                            " peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs",
-                            "peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent",
+                            'absolute block px-2 text-xs duration-200 bg-gray-700  -top-2 left-4',
+                            ' peer-focus:-top-2 peer-focus:left-4 peer-focus:bg-gray-700 peer-focus:text-xs',
+                            'peer-placeholder-shown:top-2 peer-placeholder-shown:left-8 peer-placeholder-shown:text-base peer-placeholder-shown:bg-transparent',
                             setting.twitterError
-                              ? "text-red-700 peer-focus:text-red-500"
-                              : "peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500"
+                              ? 'text-red-700 peer-focus:text-red-500'
+                              : 'peer-placeholder-shown:text-gray-500 peer-focus:text-white text-gray-500'
                           )}
                         >
                           Twitter
                         </label>
                         {setting.twitterError && (
-                          <div className="absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500">
+                          <div className='absolute px-2 text-xs text-red-700 bg-gray-700 -bottom-1.5 right-4 peer-focus:text-red-500'>
                             {setting.twitterError}
                           </div>
                         )}
                       </div>
                     </div>
                   </div>
-                  <div className="flex justify-end gap-2 px-4 py-3 bg-gray-800 rounded-b-md">
+                  <div className='flex justify-end gap-2 px-4 py-3 bg-gray-800 rounded-b-md'>
                     <div
-                      data-tooltip={"Save"}
-                      data-tooltip-location="bottom"
-                      className="p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600"
+                      data-tooltip={'Save'}
+                      data-tooltip-location='bottom'
+                      className='p-2 text-white duration-500 rounded-full cursor-pointer w-max hover:bg-gray-600'
                       onClick={() => {
                         saveProfile();
                       }}
@@ -577,37 +577,37 @@ export default function ProfileScreen({
                 </motion.div>
 
                 <motion.div
-                  className="overflow-hidden bg-gray-700 rounded-md shadow-md lg:col-start-3 lg:col-span-1 h-max"
+                  className='overflow-hidden bg-gray-700 rounded-md shadow-md lg:col-start-3 lg:col-span-1 h-max'
                   viewport={{ once: true }}
                   initial={{ opacity: 0, x: 100 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{
-                    ease: "easeInOut",
+                    ease: 'easeInOut',
                     duration: 0.5,
                     once: true,
                   }}
                 >
-                  <div className="px-4 py-3 text-lg font-bold text-white bg-gray-800">
+                  <div className='px-4 py-3 text-lg font-bold text-white bg-gray-800'>
                     Details
                   </div>
-                  <div className="px-4 pt-4 pb-2">
-                    <div className="self-center text-xs font-normal text-gray-500 text-medium">
+                  <div className='px-4 pt-4 pb-2'>
+                    <div className='self-center text-xs font-normal text-gray-500 text-medium'>
                       Created On
                     </div>
-                    <div className="self-center text-base font-normal text-white text-medium">
-                      {moment(user.createdAt)
-                        .utcOffset("+05:30")
-                        .format("hh:mm a, DD MMMM, YYYY")}
+                    <div className='self-center text-base font-normal text-white text-medium'>
+                      {moment(savedSettings.createdAt)
+                        .utcOffset('+05:30')
+                        .format('hh:mm a, DD MMMM, YYYY')}
                     </div>
                   </div>
-                  <div className="px-4 pt-2 pb-4">
-                    <div className="self-center text-xs font-normal text-gray-500 text-medium">
+                  <div className='px-4 pt-2 pb-4'>
+                    <div className='self-center text-xs font-normal text-gray-500 text-medium'>
                       Updated On
                     </div>
-                    <div className="self-center text-base font-normal text-white text-medium">
-                      {moment(user.updatedAt)
-                        .utcOffset("+05:30")
-                        .format("hh:mm a, DD MMMM, YYYY")}
+                    <div className='self-center text-base font-normal text-white text-medium'>
+                      {moment(savedSettings.updatedAt)
+                        .utcOffset('+05:30')
+                        .format('hh:mm a, DD MMMM, YYYY')}
                     </div>
                   </div>
                 </motion.div>
@@ -632,19 +632,19 @@ export default function ProfileScreen({
 export async function getServerSideProps(context) {
   const { token } = cookies(context);
 
-  if (token == null || token == "") {
+  if (token == null || token == '') {
     return {
       redirect: {
         permanent: false,
-        destination: "/login",
+        destination: '/login',
       },
     };
   }
   let tokenExpired;
-  const loginData = await fetch(process.env.BASE_API_URL + "users/logged", {
-    method: "get",
+  const loginData = await fetch(process.env.BASE_API_URL + 'users/logged', {
+    method: 'get',
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: 'Bearer ' + token,
     },
   })
     .then((res) => {
@@ -661,10 +661,10 @@ export async function getServerSideProps(context) {
 
   const savedSettings = tokenExpired
     ? {}
-    : await fetch(process.env.BASE_API_URL + "settings", {
-        method: "get",
+    : await fetch(process.env.BASE_API_URL + 'settings', {
+        method: 'get',
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: 'Bearer ' + token,
         },
       })
         .then((res) => {
